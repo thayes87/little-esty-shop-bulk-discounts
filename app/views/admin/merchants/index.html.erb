@@ -1,0 +1,13 @@
+<h1 id="admin_title">Admin Merchants</h1>
+<ul id="admin_links">
+  <li><%= link_to "Dashboard", admin_index_path %></li>
+  <li><%= link_to "Invoices", admin_invoices_path %></li>
+</ul>
+<section id="merchant_names">
+  <h1 id="merchant_title">All Merchants</h1>
+  <ul>
+    <% @merchants.each do |merchant| %>
+      <li id="<%= merchant.id %>"><%= merchant.name %></li>
+    <% end %>
+  </ul>
+</section>
