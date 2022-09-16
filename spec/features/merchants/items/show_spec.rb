@@ -8,8 +8,8 @@ RSpec.describe 'merchant items show page' do
 
       # expect(page).to have_link("Item Qui Esse")
       # click_link("Item Qui Esse")
-      visit "/merchants/#{Merchant.first.id}/items/#{Item.find_by(name: "Item Qui Esse").id}"
 
+      visit merchant_item_path(1, 1)
       expect(page).to have_content("Item Qui Esse")
       expect(page).to have_content("Nihil autem sit odio inventore deleniti. Est lauda")
       expect(page).to have_content("$751.07")
