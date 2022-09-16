@@ -58,14 +58,5 @@ RSpec.describe 'As an admin,' do
       expect(page).to_not have_content("Schroeder-Jerde")
       expect(page).to_not have_content("Jones and Stokes")
     end
-
-    it "Then I see a link to update the merchant's information. When I click the link, then I am taken to a page to edit this merchant" do
-      visit admin_merchants_path
-
-      expect(page).to have_link("New Merchant")
-      click_link "New Merchant"
-
-      expect(page.current_path).to eq admin_merchants_path
-    end
   end
 end
