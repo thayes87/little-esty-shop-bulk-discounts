@@ -7,7 +7,7 @@
   <h1 id="merchant_title">All Merchants</h1>
   <ul>
     <% @merchants.each do |merchant| %>
-      <li id="<%= merchant.id %>"><%= merchant.name %></li>
+      <li id="<%= merchant.id %>"><%= link_to "#{merchant.name}", admin_merchants_path("#{merchant.id}") %></li>
     <% end %>
   </ul>
 </section>
