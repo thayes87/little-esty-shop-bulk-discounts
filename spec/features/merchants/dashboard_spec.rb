@@ -36,13 +36,44 @@ RSpec.describe "merchant dashboard" do
       end
     end
 
-
-    xit 'next to each customer name I see the number of successful transactions they have conducted with my merchant' do
+    xit 'Next to each customer name I see the number of successful transactions they have conducted with my merchant' do
       visit merchant_dashboards_path(Merchant.first)
 
       expected_hash = {}
 
       expect(page).to have_content(expected_hash)
+    end
+
+    describe 'I see a section for "Items Ready to Ship"' do
+      it 'In that section I see a list of the names of all of my items that have been ordered and have not yet been shipped' do
+        visit merchant_dashboards_path(Merchant.first)
+
+        within '#items_ready_to_ship' do
+          expect(page).to have_content("Items Ready to Ship")
+          expect(page).to have_content("#{Item.find(1).name}")
+          expect(page).to have_content("#{Item.find(3).name}")
+        end
+      end
+
+      it 'Next to each item, I see the id of the invoice that ordered my item' do
+        visit merchant_dashboards_path(Merchant.first)
+
+        within "#item_1" do
+          expect(page).to have_content("Invoice #1")
+        end
+
+        within "#item_3" do
+          expect(page).to have_content("Invoice #1")
+        end
+      end
+
+      it 'Each invoice id is a link to my merchants invoice show page' do
+        visit merchant_dashboards_path(Merchant.first)
+
+        within "#item_#{Merchant.first.items.first.id}" do
+          expect(page).to have_link("Invoice ##{Merchant.first.items.first.id}")
+        end
+      end
     end
   end
 end
