@@ -10,10 +10,12 @@ class Item < ApplicationRecord
 
 
   def self.ready_to_ship(merchant_id)
-      joins(:invoice_items, :invoices)
-      .distinct
-      .where.not('invoice_items.status = 2')
-      .where('invoices.status = 0')
-      .where(merchant_id: merchant_id)
+    select(:id, :name, "invoice_items.invoice_id as invoice_id", "invoices.created_at as invoice_date")
+    .joins(:invoices, :invoice_items)
+    .distinct
+    .where(merchant_id: merchant_id)
+    .where("invoice_items.status != 2")
+    .where("invoices.status = 0")
+    .order("invoice_date")
   end
 end
