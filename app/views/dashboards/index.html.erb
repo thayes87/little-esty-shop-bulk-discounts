@@ -6,11 +6,18 @@
 
 <%= link_to "My Invoices", merchant_invoices_path(@merchant) %>
 
-<div id="top_customers">
+<section id="top_customers">
   <h2>Top Customers: </h2>
   <ol>
     <% @merchant.customers.top_five_customers_by_merchant.each do |customer, transactions| %>
      <li> <%= customer[1] %> <%= customer[0] %> - <%= transactions %> purchases </li>
     <% end %>
   </ol>
-</div>
+</section>
+
+<section id="items_ready_to_ship">
+  <h2>Items Ready to Ship: </h2>
+    <% @merchant.items_ready_to_ship.each do |item| %>
+     <p id="item_<%= "#{item.id}" %>"> <%= item.name %> - Invoice #<%= "#{item.invoices.id}" %></p>
+    <% end %>
+</section>

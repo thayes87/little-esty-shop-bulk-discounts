@@ -6,4 +6,8 @@ class Merchant < ApplicationRecord
   has_many :transactions, through: :invoices
 
   validates :name, presence: true
+
+  def items_ready_to_ship
+    binding.pry
+  end
 end
