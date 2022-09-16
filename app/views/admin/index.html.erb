@@ -1,9 +1,12 @@
-<h1 id="admin_title">Admin Dashboard</h1>
-<ul id="admin_links">
-  <li><%= link_to "Dashboard", admin_index_path %></li>
-  <li><%= link_to "Merchants", admin_merchants_path %></li>
-  <li><%= link_to "Invoices", admin_invoices_path %></li>
-</ul>
+<nav>
+  <h1 id="admin_title">Admin Dashboard</h1>
+  <ul id="admin_links">
+    <li><%= link_to "Dashboard", admin_index_path %></li>
+    <li><%= link_to "Merchants", admin_merchants_path %></li>
+    <li><%= link_to "Invoices", admin_invoices_path %></li>
+  </ul>
+</nav>
+
 <section>
   <h1>Top Customers</h1>
   <ol id="top_customers">
@@ -12,6 +15,7 @@
     <% end %>
   </ol>
 </section>
+
 <section id="incomplete_invoices">
   <h1>Incomplete Invoices</h1>
   <ul id="invoice_id_not_shipped">

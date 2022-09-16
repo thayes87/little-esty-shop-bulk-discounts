@@ -7,10 +7,9 @@
   </ul>
 </nav>
 
-<section id="merchant_names">
-  <ul>
-    <% @merchants.each do |merchant| %>
-      <li id="<%= merchant.id %>"><%= link_to "#{merchant.name}", admin_merchant_path(merchant.id) %></li>
-    <% end %>
-  </ul>
-</section>
+<%= form_with model: [:admin, @merchant], local: true, id: "update_merchant" do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+
+  <%= f.submit %>
+<% end %>
