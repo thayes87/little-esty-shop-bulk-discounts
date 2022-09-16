@@ -23,13 +23,13 @@ RSpec.describe 'As an admin,' do
       within("#merchant_names") do
         expect(page).to have_link("Schroeder-Jerde")
         click_link "Schroeder-Jerde"
-        expect(page.current_path).to eq admin_merchants_path("1")
+        expect(page.current_path).to eq admin_merchant_path("1")
 
         visit admin_merchants_path
 
         expect(page).to have_link("Ernser, Borer and Marks")
         click_link "Ernser, Borer and Marks"
-        expect(page.current_path).to eq admin_merchants_path("30")
+        expect(page.current_path).to eq admin_merchant_path("30")
       end
     end
 
@@ -39,22 +39,24 @@ RSpec.describe 'As an admin,' do
       within("#merchant_names") do
         expect(page).to have_link("Schroeder-Jerde")
         click_link "Schroeder-Jerde"
-        expect(page.current_path).to eq admin_merchants_path("1")
+        expect(page.current_path).to eq admin_merchant_path("1")
+    end
 
-        expect(page).to have_content("Schroeder-Jerde")
-        expect(page).to_not have_content("Ernser, Borer and Marks")
-        expect(page).to_not have_content("Jones and Stokes")
+      expect(page).to have_content("Schroeder-Jerde")
+      expect(page).to_not have_content("Ernser, Borer and Marks")
+      expect(page).to_not have_content("Jones and Stokes")
 
-        visit admin_merchants_path
+      visit admin_merchants_path
 
+      within("#merchant_names") do
         expect(page).to have_link("Ernser, Borer and Marks")
         click_link "Ernser, Borer and Marks"
-        expect(page.current_path).to eq admin_merchants_path("30")
-
-        expect(page).to have_content("Ernser, Borer and Marks")
-        expect(page).to_not have_content("Schroeder-Jerde")
-        expect(page).to_not have_content("Jones and Stokes")
+        expect(page.current_path).to eq admin_merchant_path("30")
       end
+
+      expect(page).to have_content("Ernser, Borer and Marks")
+      expect(page).to_not have_content("Schroeder-Jerde")
+      expect(page).to_not have_content("Jones and Stokes")
     end
   end
 end

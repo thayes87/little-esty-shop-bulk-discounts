@@ -4,10 +4,6 @@
   <li><%= link_to "Merchants", admin_merchants_path %></li>
   <li><%= link_to "Invoices", admin_invoices_path %></li>
 </ul>
-<section id="merchant_names">
-  <ul>
-    <% @merchants.each do |merchant| %>
-      <li id="<%= merchant.id %>"><%= link_to "#{merchant.name}", admin_merchant_path(merchant.id) %></li>
-    <% end %>
-  </ul>
+<section id="merchant_name">
+  <h1><%= @merchant.name %></h1>
 </section>
