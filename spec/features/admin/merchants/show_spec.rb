@@ -47,7 +47,7 @@ RSpec.describe 'As an admin,' do
         merchant_name = find("#merchant_name")
 
         expect(merchant_name.value).to eq "Schroeder-Jerde"
-        fill_in "#merchant_name", with: "test_merchant"
+        fill_in "merchant_name", with: "test_merchant"
         click_on "Update Merchant"
       end
 
@@ -80,6 +80,8 @@ RSpec.describe 'As an admin,' do
     expect(page).to have_content("test_merchant")
     expect(page).to_not have_content("Schroeder-Jerde")
 
-    within("#flash_message").to have_content("Updated Successfully")
+    within("#flash_message") do
+      expect(page).to have_content("Updated Successfully")
+    end
   end
 end
