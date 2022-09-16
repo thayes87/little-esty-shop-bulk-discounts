@@ -8,6 +8,6 @@ class Merchant < ApplicationRecord
   validates :name, presence: true
 
   def items_ready_to_ship
-    binding.pry
+    items.joins(:invoice_items).where('invoice_items.status = 1').distinct
   end
 end

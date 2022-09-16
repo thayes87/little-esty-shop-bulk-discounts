@@ -18,6 +18,6 @@
 <section id="items_ready_to_ship">
   <h2>Items Ready to Ship: </h2>
     <% @merchant.items_ready_to_ship.each do |item| %>
-     <p id="item_<%= "#{item.id}" %>"> <%= item.name %> - Invoice #<%= "#{item.invoices.id}" %></p>
+     <div id="item_<%= "#{item.id}" %>"> <%= item.name %> - <%= link_to "Invoice ##{item.invoices.first.id}" %></div>
     <% end %>
 </section>
