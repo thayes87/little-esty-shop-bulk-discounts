@@ -10,7 +10,12 @@ class Customer < ApplicationRecord
 
 
   def self.top_five_customers_by_merchant
-    joins(:transactions).where('transactions.result = 0').group(:last_name, :first_name).order(count: :desc).limit(5).count
+    joins(:transactions)
+    .where('transactions.result = 0')
+    .group(:last_name, :first_name)
+    .order(count: :desc)
+    .limit(5)
+    .count
   end
 
   def self.top_five_customers_admin

@@ -45,7 +45,7 @@ RSpec.describe "merchant dashboard" do
     end
 
     describe 'I see a section for "Items Ready to Ship"' do
-      it 'In that section I see a list of the names of all of my items that have been ordered and have not yet been shipped' do
+      xit 'In that section I see a list of the names of all of my items that have been ordered and have not yet been shipped' do
         visit merchant_dashboards_path(Merchant.first)
 
         within '#items_ready_to_ship' do
@@ -55,7 +55,7 @@ RSpec.describe "merchant dashboard" do
         end
       end
 
-      it 'Next to each item, I see the id of the invoice that ordered my item' do
+      xit 'Next to each item, I see the id of the invoice that ordered my item' do
         visit merchant_dashboards_path(Merchant.first)
 
         within "#item_1" do
@@ -67,12 +67,29 @@ RSpec.describe "merchant dashboard" do
         end
       end
 
-      it 'Each invoice id is a link to my merchants invoice show page' do
+      xit 'Each invoice id is a link to my merchants invoice show page' do
         visit merchant_dashboards_path(Merchant.first)
 
         within "#item_#{Merchant.first.items.first.id}" do
           expect(page).to have_link("Invoice ##{Merchant.first.items.first.id}")
         end
+      end
+
+      xit 'Next to each item name, I see the date that the invoice was created. I see the date formatted like "Monday, July 18, 2019"' do
+        visit merchant_dashboards_path(Merchant.first)
+
+        within "#item_1" do
+          expect(page).to have_content("Invoice #1")
+        end
+
+        within "#item_3" do
+          expect(page).to have_content("Invoice #1")
+        end
+      end
+
+      xit 'I see that the list is ordered from oldest to newest' do
+        visit merchant_dashboards_path(Merchant.first)
+
       end
     end
   end
