@@ -16,5 +16,9 @@ RSpec.describe 'As an admin,' do
         merchant_ids.each {|id| expect(page.has_css?("##{id}")).to eq true}
       end
     end
+
+    it "When I click on the name of a merchant from the admin merchants index page, I am taken to that merchant's admin show page (/admin/merchants/merchant_id)" do
+
+    end
   end
 end
