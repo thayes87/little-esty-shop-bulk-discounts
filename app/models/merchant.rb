@@ -6,8 +6,4 @@ class Merchant < ApplicationRecord
   has_many :transactions, through: :invoices
 
   validates :name, presence: true
-
-  def items_ready_to_ship
-    items.joins(:invoice_items).where('invoice_items.status = 1').distinct
-  end
 end
