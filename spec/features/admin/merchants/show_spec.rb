@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe 'As an admin,' do
   describe "When I visit a merchant's admin show page" do
     it "Then I see a link to update the merchant's information. When I click the link, then I am taken to a page to edit this merchant" do

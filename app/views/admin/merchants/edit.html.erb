@@ -6,7 +6,7 @@
     <li><%= link_to "Invoices", admin_invoices_path %></li>
   </ul>
 </nav>
-
+# this is going to the wrong merchant area. This isnt going to my namespace admin merchant but going to the normal merchant
 <%= form_with model: @merchant, local: true do |f| %>
   <%= f.label :name %>
   <%= f.text_field :name %>
