@@ -17,7 +17,7 @@ RSpec.describe Customer, type: :model do
       xit 'can find the top five customers with the most transactions for a specific merchant' do
         expected_hash = {}
 
-        expect(Customer.top_five_customers_by_merchant).to eq(expected_hash)
+        expect(Customer.top_five_customers(1)).to eq(expected_hash)
       end
     end
 
@@ -30,9 +30,9 @@ RSpec.describe Customer, type: :model do
           %w[Toy Mariah] => 3,
           %w[Osinski Cecelia] => 1
         }
-        
+
         expect(Customer.top_five_customers_admin).to eq expected_hash
-      end 
+      end
     end
   end
 end
