@@ -21,4 +21,10 @@ RSpec.describe Invoice, type: :model do
       expect(Invoice.not_shipped_invoices.ids.count).to eq 18
     end
   end
+
+  describe '.total_revenue' do
+    it "Should return the total price of all items on an invoice" do
+      expect(Invoice.first.total_revenue).to eq(2106777)
+    end
+  end
 end
