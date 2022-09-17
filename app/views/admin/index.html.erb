@@ -1,16 +1,21 @@
-<h1 id="admin_title">Admin Dashboard</h1>
-<ul id="admin_links">
-  <li><%= link_to "Merchants" %></li>
-  <li><%= link_to "Invoices" %></li>
-</ul>
+<nav>
+  <h1 id="admin_title">Admin Dashboard</h1>
+  <ul id="admin_links">
+    <li><%= link_to "Dashboard", admin_index_path %></li>
+    <li><%= link_to "Merchants", admin_merchants_path %></li>
+    <li><%= link_to "Invoices", admin_invoices_path %></li>
+  </ul>
+</nav>
+
 <section>
   <h1>Top Customers</h1>
   <ol id="top_customers">
-    <% @five_top_customers.each do |key, value| %>
+    <% @top_five_customers.each do |key, value| %>
       <li id="<%= key[1] %>"><%= key[0] %>, <%= key[1] %> - <%= value %></li>
     <% end %>
   </ol>
 </section>
+
 <section id="incomplete_invoices">
   <h1>Incomplete Invoices</h1>
   <ul id="invoice_id_not_shipped">
