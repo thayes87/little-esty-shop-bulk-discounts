@@ -20,6 +20,21 @@ RSpec.describe 'Merchant Items Index Page' do
           expect(page).to_not have_content("Item Itaque Consequatur")
       end
 
+      it 'next to each item I see a button to disable or enable that item' do
+        item = Item.find_by(name: "Item Qui Esse")
+
+          expect(item.status).to eq("disabled")
+
+        visit merchant_items_path(Merchant.first)
+
+          expect(page).to have_content("Item Qui Esse")
+          find("div#1").click_button("enable")
+
+          expect(current_path).to eq(merchant_items_path(Merchant.first))
+          expect(item.reload.status).to eq("enabled")
+          expect(page).to have_button("disable")
+      end
+
       it 'has two sections, one for "Enabled Items"  and one for "Disabled Items"' do 
         visit merchant_items_path(Merchant.first)
 
@@ -37,7 +52,7 @@ RSpec.describe 'Merchant Items Index Page' do
         within "div#Enabled_Items" do
           expect(page).to have_content("Item Qui Esse")
           expect(page).to_not have_content("Ea Voluptatum")
-          expect(page).to_not have_content("Item Qui Esse")
+          expect(page).to_not have_content("Autem Minima")
         end
 
         within "div#Disabled_Items" do
@@ -45,21 +60,6 @@ RSpec.describe 'Merchant Items Index Page' do
           expect(page).to have_content("Ea Voluptatum")
           expect(page).to_not have_content("Item Qui Esse")
         end
-      end
-
-      it 'next to each item I see a button to disable or enable that item' do
-        item = Item.find_by(name: "Item Qui Esse")
-
-        expect(item.status).to eq("disabled")
-
-        visit merchant_items_path(Merchant.first)
-        
-        expect(page).to have_content("Item Qui Esse")
-        find("div#1").click_button("enable")
-
-        expect(current_path).to eq(merchant_items_path(Merchant.first))
-        expect(item.reload.status).to eq("enabled")
-        expect(page).to have_button("disable")
       end
     end
   end
