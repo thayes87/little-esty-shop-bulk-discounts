@@ -8,9 +8,26 @@
 </nav>
 
 <section id="merchant_names">
-  <ul>
-    <% @merchants.each do |merchant| %>
-      <li id="<%= merchant.id %>"><%= link_to "#{merchant.name}", admin_merchant_path(merchant.id) %></li>
-    <% end %>
-  </ul>
+  <div id="Disabled_Merchants">
+    <h4> Disabled Merchants </h4>
+    <ul>
+      <% @disabled_merchants.each do |merchant| %>
+        <li id="<%= merchant.id %>">
+          <%= link_to "#{merchant.name}", admin_merchant_path(merchant.id) %>
+          <%= button_to "enable", admin_merchant_path(merchant.id), method: :patch, params: {status: "enabled"} %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <div id="Enabled_Merchants">
+    <h4> Enabled Merchants </h4>
+    <ul>
+      <% @enabled_merchants.each do |merchant| %>
+        <li id="<%= merchant.id %>">
+          <%= link_to "#{merchant.name}", admin_merchant_path(merchant.id) %>
+          <%= button_to "disable", admin_merchant_path(merchant.id), method: :patch, params: {status: "disabled"} %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
 </section>
