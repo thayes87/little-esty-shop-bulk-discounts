@@ -37,5 +37,11 @@ RSpec.describe 'As an admin,' do
       expect(page).not_to have_content("Item Eos Quia")
       expect(page).not_to have_content("Packaged")
     end
+
+    it "Then I see the total revenue that will be generated from this invoice" do
+      visit admin_invoice_path(Invoice.first)
+      save_and_open_page
+      expect(page).to have_content("Total Invoice Revenue: $21067.77")
+    end
   end
 end
