@@ -7,6 +7,7 @@ class Item < ApplicationRecord
   validates :description, presence: true
   validates :unit_price, presence: true
   validates :merchant_id, presence: true
+  validates :status, presence: true
 
 
   def self.ready_to_ship(merchant_id)

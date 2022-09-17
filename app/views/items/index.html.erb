@@ -4,6 +4,12 @@
 
 <ul>
   <% @items.each do |item| %>
-    <li><%= item.name %></li>
+    <div id=<%= "#{item.id}" %>>
+      <% if item.status == "disabled" %>
+        <li><%= item.name %></li><p><%= button_to "enable", merchant_item_path(@merchant.id, item.id), method: :patch, params: {status: "enabled"} %> </p>
+      <% else %>
+        <li><%= item.name %></li><p><%= button_to "disable", merchant_item_path(@merchant.id, item.id), method: :patch, params: {status: "disabled"} %> </p>
+      <% end %>
+    </div>
   <% end %>
 </ul>
