@@ -14,5 +14,5 @@ RSpec.describe 'merchant items show page' do
       expect(page).to have_content("Nihil autem sit odio inventore deleniti. Est lauda")
       expect(page).to have_content("$751.07")
     end
-  end
+  end  
 end
