@@ -25,5 +25,6 @@ class Item < ApplicationRecord
     .joins(:invoice_items)
     .group('items.id')
     .order(item_revenue: :desc)
+    .limit(5)
   end
 end

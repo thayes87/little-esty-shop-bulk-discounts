@@ -3,6 +3,7 @@ class ItemsController < ApplicationController
     @merchant = Merchant.find(params[:merchant_id])
     @enabled_items = @merchant.enabled_items
     @disabled_items = @merchant.disabled_items
+    @top_items = @merchant.items.order_by_revenue
   end
 
   def new
@@ -28,12 +29,12 @@ class ItemsController < ApplicationController
     elsif @item.update(item_params)
       redirect_to merchant_item_path(@merchant, @item)
       flash[:notice] = "Item successfully updated."
-    else 
+    else
       flash[:notice] = "Item not updated, additional information required."
       render :show
     end
   end
-  
+
   def create
     @merchant = Merchant.find(params[:merchant_id])
     @item = Item.create(item_params)
