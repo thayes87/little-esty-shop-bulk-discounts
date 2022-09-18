@@ -20,9 +20,10 @@ class Item < ApplicationRecord
     .order("invoice_date")
   end
 
-  def total_revenue_generated
-    invoice_items.sum do |invoice_item|
-      (invoice_item.quantity * invoice_item.unit_price)
-    end
+  def self.order_by_revenue
+    select('items.*, sum(invoice_items.quantity * invoice_items.unit_price) as item_revenue')
+    .joins(:invoice_items)
+    .group('items.id')
+    .order(item_revenue: :desc)
   end
 end
