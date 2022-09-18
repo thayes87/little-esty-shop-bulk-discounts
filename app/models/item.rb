@@ -21,6 +21,8 @@ class Item < ApplicationRecord
   end
 
   def total_revenue_generated
-    binding.pry
+    invoice_items.sum do |invoice_item|
+      (invoice_item.quantity * invoice_item.unit_price)
+    end
   end
 end

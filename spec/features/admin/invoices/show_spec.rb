@@ -62,7 +62,6 @@ RSpec.describe 'As an admin,' do
     it "When I click this button
       I am taken back to the admin invoice show page
       and I see that my Invoice's status has now been updated" do
-      save_and_open_page
       # select 'completed', :from => 'status'
       click_button("Update Invoice Status")
 
