@@ -6,6 +6,38 @@ RSpec.describe 'As an admin,' do
       visit admin_invoice_path(Invoice.first)
     end
 
+    describe "links" do
+      it "I see a header indicating that I am on the admin dashboard" do
+        visit admin_invoice_path(Invoice.first)
+
+        expect(page).to have_content "Admin Dashboard"
+      end
+
+      it "I see a link to the admin merchants index (/admin/merchants), and I can click said link to go to the correct path" do
+        visit admin_invoice_path(Invoice.first)
+
+        expect(page).to have_link("Dashboard")
+        click_link "Dashboard"
+        expect(page.current_path).to eq admin_index_path
+      end
+
+      it "I see a link to the admin merchants index (/admin/merchants), and I can click said link to go to the correct path" do
+        visit admin_invoice_path(Invoice.first)
+
+        expect(page).to have_link("Merchants")
+        click_link "Merchants"
+        expect(page.current_path).to eq admin_merchants_path
+      end
+
+      it "I see a link to the admin invoices index (/admin/invoices), and I can click said link to go to the correct path " do
+        visit admin_invoice_path(Invoice.first)
+
+        expect(page).to have_link("Invoices")
+        click_link "Invoices"
+        expect(page.current_path).to eq admin_invoices_path
+      end
+    end
+
     it "Then I see information related to that invoice including:
       - Invoice id
       - Invoice status
@@ -47,30 +79,23 @@ RSpec.describe 'As an admin,' do
       #unsure how to check for select field, or preselected status
     end
 
-    xit "When I click this select field, Then I can select a new status for the Invoice," do
-      expect(page).to have_content("Cancelled")
-
-      select 'completed', :from => 'status'
-
-      expect(page).to have_content("Completed")
-    end
-
-    it 'And next to the select field I see a button to "Update Invoice Status"' do
-      expect(page).to have_button("Update Invoice Status")
-    end
-
-    it "When I click this button
+    it "When I click this select field, Then I can select a new status for the Invoice,
+      And next to the select field I see a button to Update Invoice Status
+      When I click this button
       I am taken back to the admin invoice show page
       and I see that my Invoice's status has now been updated" do
-      save_and_open_page
-      # select 'completed', :from => 'status'
-      click_button("Update Invoice Status")
 
+      expect(page).to have_content("cancelled")
+      expect(page).to have_button("Update Invoice Status")
+
+      select('completed', from: 'invoice_status')
+
+      click_button("Update Invoice Status")
       expect(current_path).to eq(admin_invoice_path(Invoice.first))
       expect(page).to have_content("Customer: Joey Ondricka")
-      # expect(page).to have_content("Completed")
+      expect(page).to have_content("completed")
 
-      # expect(page).to_not have_content("Cancelled")
+      # expect(page).to_not have_content("in_progress") must be in within block
       expect(page).to_not have_content("Cecelia Osinski")
     end
   end
