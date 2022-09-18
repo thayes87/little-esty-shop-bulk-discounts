@@ -10,7 +10,7 @@ RSpec.describe 'Merchant item create' do
         click_link("Create Item")
 
         expect(current_path).to eq(new_merchant_item_path(Merchant.first))
-        
+
         fill_in('Name', with: 'Item A')
         fill_in('Description', with: 'Description A')
         fill_in('Unit Price', with: 9999)

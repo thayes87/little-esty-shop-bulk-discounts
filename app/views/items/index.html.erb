@@ -20,15 +20,6 @@
     <% end %>
 </div>
 
-<div id="most_popular_items">
-  <h3>Top Items</h3>
-    <ol>
-      <% @top_items.each do |item| %>
-        <li id="item_<%= "#{item.id}" %>"> <%= link_to "#{item.name}", merchant_item_path(@merchant.id, item.id)%> - $<%= '%.2f'% ((item.item_revenue.to_f) / 100) %> in sales</li>
-      <% end %>
-    </ol>
-</div>
-
 <div id="New_Item">
 <%= link_to "Create Item", new_merchant_item_path(@merchant.id) %>
 </div>

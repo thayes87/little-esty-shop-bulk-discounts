@@ -93,5 +93,11 @@ RSpec.describe Item, type: :model do
         expect(Item.ready_to_ship(45)).to eq([@item2, @item3, @item2])
       end
     end
+
+    describe '.order_by_revenue' do
+      it 'can list items in order from most revenue to least' do
+        expect(@merchant1.items.order_by_revenue).to eq([@item2, @item3, @item1])
+      end
+    end
   end
 end

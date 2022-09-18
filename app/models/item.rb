@@ -19,4 +19,12 @@ class Item < ApplicationRecord
     .where("invoices.status = 0")
     .order("invoice_date")
   end
+
+  def self.order_by_revenue
+    select('items.*, sum(invoice_items.quantity * invoice_items.unit_price) as item_revenue')
+    .joins(:invoice_items)
+    .group('items.id')
+    .order(item_revenue: :desc)
+    .limit(5)
+  end
 end
