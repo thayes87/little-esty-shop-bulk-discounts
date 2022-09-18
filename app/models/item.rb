@@ -19,4 +19,8 @@ class Item < ApplicationRecord
     .where("invoices.status = 0")
     .order("invoice_date")
   end
+
+  def total_revenue_generated
+    binding.pry
+  end
 end

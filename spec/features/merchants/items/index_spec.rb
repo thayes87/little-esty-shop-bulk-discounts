@@ -35,7 +35,7 @@ RSpec.describe 'Merchant Items Index Page' do
           expect(page).to have_button("disable")
       end
 
-      it 'has two sections, one for "Enabled Items"  and one for "Disabled Items"' do 
+      it 'has two sections, one for "Enabled Items"  and one for "Disabled Items"' do
         visit merchant_items_path(Merchant.first)
 
           expect(page).to have_content("Enabled Items")
@@ -59,6 +59,32 @@ RSpec.describe 'Merchant Items Index Page' do
           expect(page).to have_content("Autem Minima")
           expect(page).to have_content("Ea Voluptatum")
           expect(page).to_not have_content("Item Qui Esse")
+        end
+      end
+      # Merchant Items Index: 5 most popular items
+      #
+      # As a merchant
+      # When I visit my items index page
+      # Then I see the names of the top 5 most popular items ranked by total revenue generated
+      # And I see that each item name links to my merchant item show page for that item
+      # And I see the total revenue generated next to each item name
+      #
+      # Notes on Revenue Calculation:
+      #
+      # Only invoices with at least one successful transaction should count towards revenue
+      # Revenue for an invoice should be calculated as the sum of the revenue of all invoice items
+      # Revenue for an invoice item should be calculated as the invoice item unit price multiplied by the quantity (do not use the item unit price)
+      describe '5 most popular items' do
+        xit 'I see the names of the top 5 most popular items ranked by total revenue generated' do
+
+        end
+
+        xit 'I see that each item name links to my merchant items show page for that item' do
+
+        end
+
+        xit 'I see the total revenue generated next to each item name' do
+
         end
       end
     end
