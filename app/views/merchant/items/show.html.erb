@@ -4,4 +4,3 @@
   <p>Description: <%= @item.description %></p>
   <p>Price: $<%= '%.2f'% ((@item.unit_price.to_f) / 100) %></p>
   <p><%= link_to "Edit", edit_merchant_item_path(@merchant, @item), :method => :get %></p>
- 
