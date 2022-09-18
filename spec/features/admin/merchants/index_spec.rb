@@ -129,5 +129,46 @@ RSpec.describe 'As an admin,' do
         expect(page).to have_content("Willms and Sons")
       end
     end
+
+    it "I see a link to create a new merchant When I click on the link, I am taken to a form that allows me to add merchant information." do
+      visit admin_merchants_path
+
+      within("#admin_links") do
+        expect(page).to have_link("New Merchant")
+        click_on "New Merchant"
+      end
+      expect(page.current_path).to eq new_admin_merchant_path
+      within("#new_merchant") do
+        expect(page).to have_field("#merchant_name")
+      end
+    end
+
+    it "When I fill out the form I click ‘Submit’, Then I am taken back to the admin merchants index page" do
+      visit new_admin_merchant_path
+
+      within("#new_merchant") do
+        expect(page).to have_field("#merchant_name")
+        fill_in "#merchant_name", with: "Dominic's Shop"
+        click_on "Submit"
+      end
+
+      expect(page.current_path).to eq admin_merchants_path
+    end
+
+    it "I see the merchant I just created displayed and I see my merchant was created with a default status of disabled." do
+      visit new_admin_merchant_path
+
+      within("#new_merchant") do
+        expect(page).to have_field("#merchant_name")
+        fill_in "#merchant_name", with: "Dominic's Shop"
+        click_on "Submit"
+      end
+
+      expect(page.current_path).to eq admin_merchants_path
+
+      within("#disabled_merchants") do
+        expect(page).to have_content("Dominic's Shop")
+      end
+    end
   end
 end
