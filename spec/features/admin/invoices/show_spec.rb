@@ -79,30 +79,23 @@ RSpec.describe 'As an admin,' do
       #unsure how to check for select field, or preselected status
     end
 
-    xit "When I click this select field, Then I can select a new status for the Invoice," do
-      expect(page).to have_content("Cancelled")
-
-      select 'completed', :from => 'status'
-
-      expect(page).to have_content("Completed")
-    end
-
-    it 'And next to the select field I see a button to "Update Invoice Status"' do
-      expect(page).to have_button("Update Invoice Status")
-    end
-
-    it "When I click this button
+    it "When I click this select field, Then I can select a new status for the Invoice,
+      And next to the select field I see a button to Update Invoice Status
+      When I click this button
       I am taken back to the admin invoice show page
       and I see that my Invoice's status has now been updated" do
-      save_and_open_page
-      # select 'completed', :from => 'status'
-      click_button("Update Invoice Status")
 
+      expect(page).to have_content("cancelled")
+      expect(page).to have_button("Update Invoice Status")
+
+      select('completed', from: 'status')
+
+      click_button("Update Invoice Status")
       expect(current_path).to eq(admin_invoice_path(Invoice.first))
       expect(page).to have_content("Customer: Joey Ondricka")
-      # expect(page).to have_content("Completed")
+      expect(page).to have_content("completed")
 
-      # expect(page).to_not have_content("Cancelled")
+      expect(page).to_not have_content("cancelled")
       expect(page).to_not have_content("Cecelia Osinski")
     end
   end
