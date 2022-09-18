@@ -9,7 +9,7 @@ namespace :csv_load_mock do
     CSV.foreach(Rails.root.join('db/mock/customers.csv'), headers: true, :header_converters => :symbol) do |row|
       Customer.create!({id: row[:id], first_name: row[:first_name], last_name: row[:last_name], created_at: row[:created_at], updated_at: row[:updated_at]})
     end
-    ActiveRecord::Base.connection.reset_pk_sequence!('Customers')
+    ActiveRecord::Base.connection.reset_pk_sequence!('customers')
     puts "Mock Seeded Customers Table"
     puts "==================================="
   end
@@ -21,7 +21,7 @@ namespace :csv_load_mock do
 
       Invoice.create!({id: row[:id], customer_id: row[:customer_id], status: status[row[:status]], created_at: row[:created_at], updated_at: row[:updated_at]})
     end
-    ActiveRecord::Base.connection.reset_pk_sequence!('Invoices')
+    ActiveRecord::Base.connection.reset_pk_sequence!('invoices')
     puts "Mock Seeded Invoices Table"
     puts "==================================="
   end
@@ -31,7 +31,7 @@ namespace :csv_load_mock do
     CSV.foreach(Rails.root.join('db/mock/merchants.csv'), headers: true, :header_converters => :symbol) do |row|
       Merchant.create!({id: row[:id], name: row[:name], created_at: row[:created_at], updated_at: row[:updated_at]})
     end
-    ActiveRecord::Base.connection.reset_pk_sequence!('Merchants')
+    ActiveRecord::Base.connection.reset_pk_sequence!('merchants')
     puts "Mock Seeded Merchants Table"
     puts "==================================="
   end
@@ -41,7 +41,7 @@ namespace :csv_load_mock do
     CSV.foreach(Rails.root.join('db/mock/items.csv'), headers: true, :header_converters => :symbol) do |row|
       Item.create!({id: row[:id], name: row[:name], description: row[:description], unit_price: row[:unit_price], merchant_id: row[:merchant_id], created_at: row[:created_at], updated_at: row[:updated_at]})
     end
-    ActiveRecord::Base.connection.reset_pk_sequence!('Items')
+    ActiveRecord::Base.connection.reset_pk_sequence!('items')
     puts "Mock Seeded Items Table"
     puts "==================================="
   end
@@ -53,7 +53,7 @@ namespace :csv_load_mock do
 
       Transaction.create!({id: row[:id], invoice_id: row[:invoice_id], credit_card_number: row[:credit_card_number], credit_card_expiration_date: row[:credit_card_expiration_date], result: status[row[:result]], created_at: row[:created_at], updated_at: row[:updated_at]})
     end
-    ActiveRecord::Base.connection.reset_pk_sequence!('Transactions')
+    ActiveRecord::Base.connection.reset_pk_sequence!('transactions')
     puts "Mock Seeded Transactions Table"
     puts "==================================="
   end
@@ -65,7 +65,7 @@ namespace :csv_load_mock do
 
       InvoiceItem.create!({id: row[:id], item_id: row[:item_id], invoice_id: row[:invoice_id], quantity: row[:quantity], unit_price: row[:unit_price], status: status[row[:status]], created_at: row[:created_at], updated_at: row[:updated_at]})
     end
-    ActiveRecord::Base.connection.reset_pk_sequence!('Invoice_Items')
+    ActiveRecord::Base.connection.reset_pk_sequence!('invoice_Items')
     puts "Mock Seeded Invoice_Items Table"
     puts "==================================="
   end

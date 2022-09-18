@@ -14,7 +14,7 @@ RSpec.describe 'Merchant item create' do
         fill_in('Name', with: 'Item A')
         fill_in('Description', with: 'Description A')
         fill_in('Unit Price', with: 9999)
-    
+
         click_button('Save')
 
         expect(current_path).to eq(merchant_items_path(Merchant.first))

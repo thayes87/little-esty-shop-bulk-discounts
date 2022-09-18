@@ -8,6 +8,19 @@ class Admin::MerchantsController < ApplicationController
     @merchant = Merchant.find(params[:id])
   end
 
+  def new
+    @merchant = Merchant.new
+  end
+
+  def create
+    @merchant = Merchant.new(merchant_params)
+    if @merchant.save
+      redirect_to admin_merchants_path, notice: "Created Successfully"
+    else
+      render new_admin_merchant_path, notice: "Merchant not created: Missing required information"
+    end
+  end
+
   def update
     merchant = Merchant.find(params[:id])
 
@@ -17,8 +30,7 @@ class Admin::MerchantsController < ApplicationController
     elsif merchant.update(merchant_params)
       redirect_to admin_merchant_path(params[:id]), notice: "Updated Successfully"
     else
-      flash[:notice] = "Merchant not updated, additional information required."
-      render :show
+      redirect_to admin_merchant_path(params[:id]), notice: "Merchant not updated, additional information required."
     end
   end
 
