@@ -154,15 +154,32 @@ RSpec.describe 'Merchant Items Index Page' do
             item1 = @item1.name
             item2 = @item2.name
             item3 = @item3.name
-            
+
             expect(item2).to appear_before(item3)
             expect(item3).to appear_before(item1)
           end
         end
 
-        xit 'I see that each item name links to my merchant items show page for that item' do
+        it 'I see that each item name links to my merchant items show page for that item' do
+          visit merchant_items_path(45)
 
+          within '#most_popular_items' do
+            expect(page).to have_link("Medium basket")
+            click_link ("Medium basket")
+            expect(current_path).to eq(merchant_item_path(@merchant1, @item2))
+
+            visit merchant_items_path(45)
+            expect(page).to have_link("Little basket")
+            click_link ("Little basket")
+            expect(current_path).to eq(merchant_item_path(@merchant1, @item3))
+
+            visit merchant_items_path(45)
+            expect(page).to have_link("Big basket")
+            click_link ("Big basket")
+            expect(current_path).to eq(merchant_item_path(@merchant1, @item1))
+          end
         end
+
 
         xit 'I see the total revenue generated next to each item name' do
 
