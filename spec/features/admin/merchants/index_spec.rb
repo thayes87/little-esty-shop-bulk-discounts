@@ -33,33 +33,7 @@ RSpec.describe 'As an admin,' do
       end
     end
 
-    it "I see the name of that merchant after clicking the merchant link on the index page" do
-      visit admin_merchants_path
-
-      within("#merchant_names") do
-        expect(page).to have_link("Schroeder-Jerde")
-        click_link "Schroeder-Jerde"
-        expect(page.current_path).to eq admin_merchant_path("1")
-    end
-
-      expect(page).to have_content("Schroeder-Jerde")
-      expect(page).to_not have_content("Ernser, Borer and Marks")
-      expect(page).to_not have_content("Jones and Stokes")
-
-      visit admin_merchants_path
-
-      within("#merchant_names") do
-        expect(page).to have_link("Ernser, Borer and Marks")
-        click_link "Ernser, Borer and Marks"
-        expect(page.current_path).to eq admin_merchant_path("30")
-      end
-
-      expect(page).to have_content("Ernser, Borer and Marks")
-      expect(page).to_not have_content("Schroeder-Jerde")
-      expect(page).to_not have_content("Jones and Stokes")
-    end
-
-    it "Then next to each merchant name I see a button to disable or enable that merchant." do
+    it "Next to each merchant name I see a button to disable or enable that merchant." do
       visit admin_merchants_path
 
       within("#merchant_names") do
@@ -140,34 +114,6 @@ RSpec.describe 'As an admin,' do
       expect(page.current_path).to eq new_admin_merchant_path
       within("#new_merchant") do
         expect(page).to have_field("#merchant_name")
-      end
-    end
-
-    it "When I fill out the form I click ‘Submit’, Then I am taken back to the admin merchants index page" do
-      visit new_admin_merchant_path
-
-      within("#new_merchant") do
-        expect(page).to have_field("#merchant_name")
-        fill_in "#merchant_name", with: "Dominic's Shop"
-        click_on "Submit"
-      end
-
-      expect(page.current_path).to eq admin_merchants_path
-    end
-
-    it "I see the merchant I just created displayed and I see my merchant was created with a default status of disabled." do
-      visit new_admin_merchant_path
-
-      within("#new_merchant") do
-        expect(page).to have_field("#merchant_name")
-        fill_in "#merchant_name", with: "Dominic's Shop"
-        click_on "Submit"
-      end
-
-      expect(page.current_path).to eq admin_merchants_path
-
-      within("#disabled_merchants") do
-        expect(page).to have_content("Dominic's Shop")
       end
     end
   end
