@@ -112,8 +112,9 @@ RSpec.describe 'As an admin,' do
         click_on "New Merchant"
       end
       expect(page.current_path).to eq new_admin_merchant_path
+
       within("#new_merchant") do
-        expect(page).to have_field("#merchant_name")
+        expect(page).to have_field("merchant_name")
       end
     end
   end

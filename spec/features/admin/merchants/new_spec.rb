@@ -6,9 +6,9 @@ RSpec.describe 'As an admin,' do
       visit new_admin_merchant_path
 
       within("#new_merchant") do
-        expect(page).to have_field("#merchant_name")
-        fill_in "#merchant_name", with: "Dominic's Shop"
-        click_on "Submit"
+        expect(page).to have_field("merchant_name")
+        fill_in "merchant_name", with: "Dominic's Shop"
+        click_on "Create Merchant"
       end
 
       expect(page.current_path).to eq admin_merchants_path
@@ -18,9 +18,9 @@ RSpec.describe 'As an admin,' do
       visit new_admin_merchant_path
 
       within("#new_merchant") do
-        expect(page).to have_field("#merchant_name")
-        fill_in "#merchant_name", with: "Dominic's Shop"
-        click_on "Submit"
+        expect(page).to have_field("merchant_name")
+        fill_in "merchant_name", with: "Dominic's Shop"
+        click_on "Create Merchant"
       end
 
       expect(page.current_path).to eq admin_merchants_path
