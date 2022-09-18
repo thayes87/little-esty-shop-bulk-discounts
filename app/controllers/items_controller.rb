@@ -30,7 +30,9 @@ class ItemsController < ApplicationController
       render :show
     end
   end
-
+  def create
+    
+  end
 private
   def item_params
     params.permit(:name, :description, :unit_price)
