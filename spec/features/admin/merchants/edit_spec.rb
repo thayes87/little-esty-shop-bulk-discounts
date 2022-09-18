@@ -72,4 +72,31 @@ RSpec.describe 'As an admin,' do
         expect(page).to have_content("Updated Successfully")
       end
     end
+
+    it "I see a flash message stating that the merchant failed to update if not given the correct information" do
+      visit admin_merchants_path
+
+      expect(page).to have_link("Schroeder-Jerde")
+      click_link "Schroeder-Jerde"
+      expect(page.current_path).to eq admin_merchant_path(1)
+
+      expect(page).to have_link("Update Merchant")
+      click_link "Update Merchant"
+      expect(page.current_path).to eq edit_admin_merchant_path(1)
+
+      within("#update_merchant") do
+        merchant_name = find("#merchant_name")
+
+        expect(merchant_name.value).to eq "Schroeder-Jerde"
+        fill_in "merchant_name", with: ""
+        click_on "Update Merchant"
+      end
+
+      expect(page.current_path).to eq admin_merchant_path(1)
+      expect(page).to have_content("Schroeder-Jerde")
+
+      within("#flash_message") do
+        expect(page).to have_content("Merchant not updated, additional information required.")
+      end
+    end
   end

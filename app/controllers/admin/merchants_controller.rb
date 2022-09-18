@@ -30,8 +30,7 @@ class Admin::MerchantsController < ApplicationController
     elsif merchant.update(merchant_params)
       redirect_to admin_merchant_path(params[:id]), notice: "Updated Successfully"
     else
-      flash[:notice] = "Merchant not updated, additional information required."
-      render :show
+      redirect_to admin_merchant_path(params[:id]), notice: "Merchant not updated, additional information required."
     end
   end
 
