@@ -10,7 +10,7 @@
   <h2>Top Customers: </h2>
   <ol>
     <% @customers.each do |customer| %>
-     <li> <%= customer.first_name %> <%= customer.last_name %> - <%= customer.number_transactions %> purchases </li>
+     <li id="customer_<%= "#{customer.id}" %>"> <%= customer.first_name %> <%= customer.last_name %> - <%= customer.number_transactions %> purchases </li>
     <% end %>
   </ol>
 </section>
