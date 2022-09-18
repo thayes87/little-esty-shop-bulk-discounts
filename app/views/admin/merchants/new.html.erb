@@ -7,7 +7,9 @@
   </ul>
 </nav>
 
-<%= form_with model: @merchant, local: true do |form| %>
-  <%= form.text_field :name %>
-  <%= form.submit %>
+<%= form_with model: [:admin, @merchant], local: true, id: "new_merchant" do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+
+  <%= f.submit %>
 <% end %>
