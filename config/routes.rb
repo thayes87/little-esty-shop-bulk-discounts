@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   #get '/merchants/:id/items/:id', to: 'items#edit'
   resources :admin, only: [:index]
   namespace :admin do
-    resources :invoices, only: [:index, :show, :update]
-    resources :merchants, only: [:index, :show, :edit, :update]
+    resources :invoices, only: [:index, :show]
+    resources :merchants
   end
 end

@@ -33,33 +33,7 @@ RSpec.describe 'As an admin,' do
       end
     end
 
-    it "I see the name of that merchant after clicking the merchant link on the index page" do
-      visit admin_merchants_path
-
-      within("#merchant_names") do
-        expect(page).to have_link("Schroeder-Jerde")
-        click_link "Schroeder-Jerde"
-        expect(page.current_path).to eq admin_merchant_path("1")
-    end
-
-      expect(page).to have_content("Schroeder-Jerde")
-      expect(page).to_not have_content("Ernser, Borer and Marks")
-      expect(page).to_not have_content("Jones and Stokes")
-
-      visit admin_merchants_path
-
-      within("#merchant_names") do
-        expect(page).to have_link("Ernser, Borer and Marks")
-        click_link "Ernser, Borer and Marks"
-        expect(page.current_path).to eq admin_merchant_path("30")
-      end
-
-      expect(page).to have_content("Ernser, Borer and Marks")
-      expect(page).to_not have_content("Schroeder-Jerde")
-      expect(page).to_not have_content("Jones and Stokes")
-    end
-
-    it "Then next to each merchant name I see a button to disable or enable that merchant." do
+    it "Next to each merchant name I see a button to disable or enable that merchant." do
       visit admin_merchants_path
 
       within("#merchant_names") do
@@ -127,6 +101,20 @@ RSpec.describe 'As an admin,' do
         expect(page).to have_content("Schroeder-Jerde")
         expect(page).to have_content("Klein, Rempel and Jones")
         expect(page).to have_content("Willms and Sons")
+      end
+    end
+
+    it "I see a link to create a new merchant When I click on the link, I am taken to a form that allows me to add merchant information." do
+      visit admin_merchants_path
+
+      within("#admin_links") do
+        expect(page).to have_link("New Merchant")
+        click_on "New Merchant"
+      end
+      expect(page.current_path).to eq new_admin_merchant_path
+
+      within("#new_merchant") do
+        expect(page).to have_field("merchant_name")
       end
     end
   end
