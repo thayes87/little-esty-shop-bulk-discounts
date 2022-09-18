@@ -8,6 +8,20 @@ class Admin::MerchantsController < ApplicationController
     @merchant = Merchant.find(params[:id])
   end
 
+  def new
+    @merchant = Merchant.new
+  end
+
+  def create
+    @merchant = Merchant.new(merchant_params)
+    if @merchant.save
+      redirect_to admin_merchants_path
+    else
+      flash.now[:error] = 'Merchant not created: Missing required information'
+      render new_admin_merchant_path
+    end
+  end
+
   def update
     merchant = Merchant.find(params[:id])
 
