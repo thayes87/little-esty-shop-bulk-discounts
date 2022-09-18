@@ -58,5 +58,76 @@ RSpec.describe 'As an admin,' do
       expect(page).to_not have_content("Schroeder-Jerde")
       expect(page).to_not have_content("Jones and Stokes")
     end
+
+    it "Then next to each merchant name I see a button to disable or enable that merchant." do
+      visit admin_merchants_path
+
+      within("#merchant_names") do
+        expect(page).to have_button("enable")
+        within("#1") do
+          click_on "enable"
+        end
+        expect(page).to have_button("disable")
+      end
+    end
+
+    it "When I click this button, Then I am redirected back to the admin merchants index, and I see that the merchant's status has changed" do
+      visit admin_merchants_path
+
+      within("#disabled_merchants") do
+        expect(find_all("li").count).to eq 30
+
+        within("#1") do
+          expect(page).to have_button("enable")
+          click_on "enable"
+          expect(page.current_path).to eq admin_merchants_path
+        end
+
+        expect(find_all("li").count).to eq 29
+      end
+
+      within("#1") do
+        expect(page).to have_button("disable")
+        expect(page).to_not have_button("enable")
+      end
+    end
+
+    it "Then I see two sections, one for 'Enabled Merchants' and one for 'Disabled Merchants'" do
+      visit admin_merchants_path
+
+      within("#merchant_names") do
+        expect(page).to have_content("Disabled Merchants")
+        expect(page).to have_content("Enabled Merchants")
+      end
+    end
+
+    it "I see that each Merchant is listed in the appropriate section" do
+      visit admin_merchants_path
+
+      within("#1") do
+        expect(page).to have_button("enable")
+        click_on "enable"
+        expect(page.current_path).to eq admin_merchants_path
+      end
+
+      within("#2") do
+        expect(page).to have_button("enable")
+        click_on "enable"
+        expect(page.current_path).to eq admin_merchants_path
+      end
+
+      within("#3") do
+        expect(page).to have_button("enable")
+        click_on "enable"
+        expect(page.current_path).to eq admin_merchants_path
+      end
+
+      within("#enabled_merchants") do
+        expect(find_all("li").count).to eq 3
+        expect(page).to have_content("Schroeder-Jerde")
+        expect(page).to have_content("Klein, Rempel and Jones")
+        expect(page).to have_content("Willms and Sons")
+      end
+    end
   end
 end
