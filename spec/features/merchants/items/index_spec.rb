@@ -180,9 +180,14 @@ RSpec.describe 'Merchant Items Index Page' do
           end
         end
 
-
-        xit 'I see the total revenue generated next to each item name' do
-
+        it 'I see the total revenue generated next to each item name' do
+          visit merchant_items_path(45)
+          
+          within "#most_popular_items" do
+            expect(page).to have_content("Medium basket - $391.72 in sales")
+            expect(page).to have_content("Little basket - $311.74 in sales")
+            expect(page).to have_content("Big basket - $164.89 in sales")
+          end
         end
       end
     end
