@@ -163,23 +163,23 @@ RSpec.describe 'As an admin,' do
       within("#top_five_merchants") do
         within("#2") do
           expect(page).to have_link("Klein, Rempel and Jones")
-          expect(page).to have_content("8538860")
+          expect(page).to have_content("$85388.60")
         end
         within("#1") do
           expect(page).to have_link("Schroeder-Jerde")
-          expect(page).to have_content("3345531")
+          expect(page).to have_content("$33455.31")
         end
         within("#3") do
           expect(page).to have_link("Willms and Sons")
-          expect(page).to have_content("1842708")
+          expect(page).to have_content("$18427.08")
         end
         within("#4") do
           expect(page).to have_link("Cummings-Thiel")
-          expect(page).to have_content("318518")
+          expect(page).to have_content("$3185.18")
         end
         within("#6") do
           expect(page).to have_link("Williamson Group")
-          expect(page).to have_content("253218")
+          expect(page).to have_content("$2532.18")
         end
         expect(page).to_not have_link("Bosco, Howe and Davis")
         expect(page).to_not have_content("49896565")
