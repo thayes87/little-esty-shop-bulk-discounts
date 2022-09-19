@@ -219,11 +219,11 @@ RSpec.describe 'As an admin,' do
         end
         expect(page).to_not have_link("Bernhard-Johns")
         expect(page).to_not have_content("49896565")
-        expect(page).to have_content("Top selling date for Bosco, Howe and Davis was '3/9/2012'")
+        expect(page).to_not have_content("Top selling date for Bernhard-Johns was '3/9/2012'")
 
         expect(page).to_not have_link("Pollich and Sons")
         expect(page).to_not have_content("3974755")
-        expect(page).to have_content("Top selling date for Ullrich-Moen was '3/9/2012'")
+        expect(page).to_not have_content("Top selling date for Pollich and Sons was '3/9/2012'")
       end
     end
   end
