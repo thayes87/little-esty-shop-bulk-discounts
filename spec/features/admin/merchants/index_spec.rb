@@ -60,9 +60,11 @@ RSpec.describe 'As an admin,' do
         expect(find_all("li").count).to eq 29
       end
 
-      within("#1") do
-        expect(page).to have_button("disable")
-        expect(page).to_not have_button("enable")
+      within("#enabled_merchants") do
+        within("#1") do
+          expect(page).to have_button("disable")
+          expect(page).to_not have_button("enable")
+        end
       end
     end
 
@@ -78,22 +80,27 @@ RSpec.describe 'As an admin,' do
     it "I see that each Merchant is listed in the appropriate section" do
       visit admin_merchants_path
 
-      within("#1") do
-        expect(page).to have_button("enable")
-        click_on "enable"
-        expect(page.current_path).to eq admin_merchants_path
-      end
+      within("#disabled_merchants") do
+        within("#1") do
+          expect(page).to have_button("enable")
+          click_on "enable"
+          expect(page.current_path).to eq admin_merchants_path
+        end
 
-      within("#2") do
-        expect(page).to have_button("enable")
-        click_on "enable"
-        expect(page.current_path).to eq admin_merchants_path
-      end
+        visit admin_merchants_path
+        within("#2") do
+          expect(page).to have_button("enable")
+          click_on "enable"
+          expect(page.current_path).to eq admin_merchants_path
+          visit admin_merchants_path
+        end
 
-      within("#3") do
-        expect(page).to have_button("enable")
-        click_on "enable"
-        expect(page.current_path).to eq admin_merchants_path
+        visit admin_merchants_path
+        within("#3") do
+          expect(page).to have_button("enable")
+          click_on "enable"
+          expect(page.current_path).to eq admin_merchants_path
+        end
       end
 
       within("#enabled_merchants") do
