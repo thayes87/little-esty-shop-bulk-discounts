@@ -61,7 +61,7 @@ RSpec.describe 'Merchant Items Index Page' do
           expect(page).to_not have_content("Item Qui Esse")
         end
       end
-      
+
       describe '5 most popular items' do
         before :each do
           @merchant1 = Merchant.create!(id: 45, name:"Bob's Baskets")
@@ -176,6 +176,14 @@ RSpec.describe 'Merchant Items Index Page' do
             expect(page).to have_content("Little basket - $311.74 in sales")
             expect(page).to have_content("Big basket - $164.89 in sales")
           end
+        end
+
+        it 'Next to each of the 5 most popular items I see the date with the most sales for each item' do
+          
+        end
+
+        it 'I see a label "Top selling date for ___ was ___"' do
+
         end
       end
     end
