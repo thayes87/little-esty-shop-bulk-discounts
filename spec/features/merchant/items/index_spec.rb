@@ -179,11 +179,39 @@ RSpec.describe 'Merchant Items Index Page' do
         end
 
         it 'Next to each of the 5 most popular items I see the date with the most sales for each item' do
-          
+          visit merchant_items_path(45)
+
+          within "#most_popular_items" do
+            within "#item_46" do
+              expect(page).to have_content("9/19/2022")
+            end
+
+            within "#item_47" do
+              expect(page).to have_content("9/19/2022")
+            end
+
+            within "#item_45" do
+              expect(page).to have_content("9/19/2022")
+            end
+          end
         end
 
         it 'I see a label "Top selling date for ___ was ___"' do
+          visit merchant_items_path(45)
+          
+          within "#most_popular_items" do
+            within "#item_46" do
+              expect(page).to have_content("Top selling date for Medium basket was 9/19/2022")
+            end
 
+            within "#item_47" do
+              expect(page).to have_content("Top selling date for Little basket was 9/19/2022")
+            end
+
+            within "#item_45" do
+              expect(page).to have_content("Top selling date for Big basket was 9/19/2022")
+            end
+          end
         end
       end
     end
