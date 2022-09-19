@@ -22,14 +22,16 @@ RSpec.describe 'Merchant Invoices Show Page' do
         invoice_1 = @merchant.invoices.first
 
         visit merchant_invoice_path(@merchant, invoice_1)
+        
+        within "div#1" do
+          expect(page).to have_content("Item Name: Item Qui Esse")
+          expect(page).to have_content("Item Quantity: 5")
+          expect(page).to have_content("Item Unit Price: $136.35")
+          expect(page).to have_content("Item Status: packaged")
 
-        expect(page).to have_content("Item Name: Item Qui Esse")
-        expect(page).to have_content("Item Quantity: 5")
-        expect(page).to have_content("Unit Price: $136.35")
-        expect(page).to have_content("Item: Status: packaged")
-
-        expect(page).to_not have_content("Item Name: Item Expedita Aliquam")
-        expect(page).to_not have_content("Item Name: Provident At")
+          expect(page).to_not have_content("Item Name: Item Expedita Aliquam")
+          expect(page).to_not have_content("Item Name: Provident At")
+        end
       end
     end
   end

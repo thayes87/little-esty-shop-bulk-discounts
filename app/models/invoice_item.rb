@@ -9,4 +9,9 @@ class InvoiceItem < ApplicationRecord
   validates :status, presence: true
   enum status: [ :pending, :packaged, :shipped]
 
+  def self.for_merchant(merchant_id)
+    select(:item_id, :status, :unit_price, :quantity)
+      .joins(item: [:invoice_items])
+      .where("items.merchant_id = #{merchant_id}")
+  end
 end
