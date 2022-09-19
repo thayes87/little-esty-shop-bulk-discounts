@@ -5,9 +5,11 @@ RSpec.describe 'As an admin,' do
     it "I see a form filled in with the existing merchant attribute information" do
       visit admin_merchants_path
 
-      expect(page).to have_link("Schroeder-Jerde")
-      click_link "Schroeder-Jerde"
-      expect(page.current_path).to eq admin_merchant_path(1)
+      within("#disabled_merchants") do
+        expect(page).to have_link("Schroeder-Jerde")
+        click_link "Schroeder-Jerde"
+        expect(page.current_path).to eq admin_merchant_path(1)
+      end
 
       expect(page).to have_link("Update Merchant")
       click_link "Update Merchant"
@@ -23,9 +25,11 @@ RSpec.describe 'As an admin,' do
     it "When I update the information in the form and I click ‘submit’, Then I am redirected back to the merchant's admin show page where I see the updated information" do
       visit admin_merchants_path
 
-      expect(page).to have_link("Schroeder-Jerde")
-      click_link "Schroeder-Jerde"
-      expect(page.current_path).to eq admin_merchant_path(1)
+      within("#disabled_merchants") do
+        expect(page).to have_link("Schroeder-Jerde")
+        click_link "Schroeder-Jerde"
+        expect(page.current_path).to eq admin_merchant_path(1)
+      end
 
       expect(page).to have_link("Update Merchant")
       click_link "Update Merchant"
@@ -48,9 +52,11 @@ RSpec.describe 'As an admin,' do
     it "I see a flash message stating that the information has been successfully updated." do
       visit admin_merchants_path
 
-      expect(page).to have_link("Schroeder-Jerde")
-      click_link "Schroeder-Jerde"
-      expect(page.current_path).to eq admin_merchant_path(1)
+      within("#disabled_merchants") do
+        expect(page).to have_link("Schroeder-Jerde")
+        click_link "Schroeder-Jerde"
+        expect(page.current_path).to eq admin_merchant_path(1)
+      end
 
       expect(page).to have_link("Update Merchant")
       click_link "Update Merchant"
@@ -76,9 +82,11 @@ RSpec.describe 'As an admin,' do
     it "I see a flash message stating that the merchant failed to update if not given the correct information" do
       visit admin_merchants_path
 
-      expect(page).to have_link("Schroeder-Jerde")
-      click_link "Schroeder-Jerde"
-      expect(page.current_path).to eq admin_merchant_path(1)
+      within("#disabled_merchants") do
+        expect(page).to have_link("Schroeder-Jerde")
+        click_link "Schroeder-Jerde"
+        expect(page.current_path).to eq admin_merchant_path(1)
+      end
 
       expect(page).to have_link("Update Merchant")
       click_link "Update Merchant"

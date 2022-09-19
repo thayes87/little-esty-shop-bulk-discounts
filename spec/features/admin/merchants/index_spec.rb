@@ -60,9 +60,11 @@ RSpec.describe 'As an admin,' do
         expect(find_all("li").count).to eq 29
       end
 
-      within("#1") do
-        expect(page).to have_button("disable")
-        expect(page).to_not have_button("enable")
+      within("#enabled_merchants") do
+        within("#1") do
+          expect(page).to have_button("disable")
+          expect(page).to_not have_button("enable")
+        end
       end
     end
 
@@ -78,22 +80,27 @@ RSpec.describe 'As an admin,' do
     it "I see that each Merchant is listed in the appropriate section" do
       visit admin_merchants_path
 
-      within("#1") do
-        expect(page).to have_button("enable")
-        click_on "enable"
-        expect(page.current_path).to eq admin_merchants_path
-      end
+      within("#disabled_merchants") do
+        within("#1") do
+          expect(page).to have_button("enable")
+          click_on "enable"
+          expect(page.current_path).to eq admin_merchants_path
+        end
 
-      within("#2") do
-        expect(page).to have_button("enable")
-        click_on "enable"
-        expect(page.current_path).to eq admin_merchants_path
-      end
+        visit admin_merchants_path
+        within("#2") do
+          expect(page).to have_button("enable")
+          click_on "enable"
+          expect(page.current_path).to eq admin_merchants_path
+          visit admin_merchants_path
+        end
 
-      within("#3") do
-        expect(page).to have_button("enable")
-        click_on "enable"
-        expect(page.current_path).to eq admin_merchants_path
+        visit admin_merchants_path
+        within("#3") do
+          expect(page).to have_button("enable")
+          click_on "enable"
+          expect(page.current_path).to eq admin_merchants_path
+        end
       end
 
       within("#enabled_merchants") do
@@ -115,6 +122,69 @@ RSpec.describe 'As an admin,' do
 
       within("#new_merchant") do
         expect(page).to have_field("merchant_name")
+      end
+    end
+
+    it "I see the names of the top 5 merchants by total revenue generated" do
+      visit admin_merchants_path
+
+      within("#top_five_merchants") do
+        expect(page).to have_content("Klein, Rempel and Jones")
+        expect(page).to have_content("Schroeder-Jerde")
+        expect(page).to have_content("Willms and Sons")
+        expect(page).to have_content("Cummings-Thiel")
+        expect(page).to have_content("Williamson Group")
+        expect(page).to_not have_content("Bosco, Howe and Davis")
+        expect(page).to_not have_content("Ullrich-Moen")
+      end
+    end
+
+    it "I see that each merchant name links to the admin merchant show page for that merchant" do
+      visit admin_merchants_path
+
+      within("#top_five_merchants") do
+        expect(page).to have_link("Klein, Rempel and Jones")
+        expect(page).to have_link("Schroeder-Jerde")
+        expect(page).to have_link("Willms and Sons")
+        expect(page).to have_link("Cummings-Thiel")
+        expect(page).to have_link("Williamson Group")
+        expect(page).to_not have_link("Bosco, Howe and Davis")
+        expect(page).to_not have_link("Ullrich-Moen")
+
+        click_on "Klein, Rempel and Jones"
+
+        expect(page.current_path).to eq admin_merchant_path(2)
+      end
+    end
+
+    it "I see the total revenue generated next to each merchant name" do
+      visit admin_merchants_path
+
+      within("#top_five_merchants") do
+        within("#2") do
+          expect(page).to have_link("Klein, Rempel and Jones")
+          expect(page).to have_content("$85388.60")
+        end
+        within("#1") do
+          expect(page).to have_link("Schroeder-Jerde")
+          expect(page).to have_content("$33455.31")
+        end
+        within("#3") do
+          expect(page).to have_link("Willms and Sons")
+          expect(page).to have_content("$18427.08")
+        end
+        within("#4") do
+          expect(page).to have_link("Cummings-Thiel")
+          expect(page).to have_content("$3185.18")
+        end
+        within("#6") do
+          expect(page).to have_link("Williamson Group")
+          expect(page).to have_content("$2532.18")
+        end
+        expect(page).to_not have_link("Bosco, Howe and Davis")
+        expect(page).to_not have_content("49896565")
+        expect(page).to_not have_link("Ullrich-Moen")
+        expect(page).to_not have_content("3974755")
       end
     end
   end
