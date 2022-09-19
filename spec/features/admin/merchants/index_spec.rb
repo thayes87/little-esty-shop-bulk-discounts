@@ -133,6 +133,8 @@ RSpec.describe 'As an admin,' do
     end
 
     it "I see that each merchant name links to the admin merchant show page for that merchant" do
+      visit admin_merchants_path
+
       within("#top_five_merchants") do
         expect(page).to have_link("Klein, Rempel and Jones")
         expect(page).to have_link("Schroeder-Jerde")
@@ -149,6 +151,8 @@ RSpec.describe 'As an admin,' do
     end
 
     it "I see the total revenue generated next to each merchant name" do
+      visit admin_merchants_path
+
       within("#top_five_merchants") do
         within("#2") do
           expect(page).to have_link("Klein, Rempel and Jones")

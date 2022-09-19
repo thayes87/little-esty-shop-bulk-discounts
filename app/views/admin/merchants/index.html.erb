@@ -10,7 +10,7 @@
 <section id="top_five_merchants">
   <ol>
     <% @top_five_merchants.each do |merchant| %>
-      <li id="<%= merchant.id %>"><%= merchant.name %> - <%= merchant.revenue %></li>
+      <li id="<%= merchant.id %>"><%= link_to "#{merchant.name}", admin_merchant_path("#{merchant.id}")%> - <%= merchant.revenue %></li>
     <% end %>
   </ol>
 </section>
