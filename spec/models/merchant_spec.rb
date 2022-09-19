@@ -47,5 +47,21 @@ RSpec.describe Merchant, type: :model do
         expect(Merchant.top_five_by_revenue).to eq(expected_arr)
       end
     end
+
+    describe "best_day" do
+      it "Returns the date of a merchants best day by revenue" do
+        klein = Merchant.find(2)
+        schroeder = Merchant.find(1)
+        willms = Merchant.find(3)
+        cummings = Merchant.find(4)
+        williamson = Merchant.find(6)
+
+        expect(klein.best_day).to eq "2012-03-25 09:54:09"
+        expect(schroeder.best_day).to eq "2012-03-25 09:54:09"
+        expect(willms.best_day).to eq "2012-03-07 19:54:10"
+        expect(cummings.best_day).to eq "2012-03-12 05:54:09"
+        expect(williamson.best_day).to eq "2012-03-10 00:54:09"
+      end
+    end
   end
 end

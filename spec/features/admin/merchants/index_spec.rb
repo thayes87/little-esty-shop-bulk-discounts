@@ -187,5 +187,44 @@ RSpec.describe 'As an admin,' do
         expect(page).to_not have_content("3974755")
       end
     end
+
+    it "Then next to each of the 5 merchants by revenue I see the date with the most revenue for each merchant. ('Top selling date for <merchant name> was <date with most sales>')" do
+      visit admin_merchants_path
+
+      within("#top_five_merchants") do
+        within("#2") do
+          expect(page).to have_link("Klein, Rempel and Jones")
+          expect(page).to have_content("$85388.60")
+          expect(page).to have_content("Top selling date for Klein, Rempel and Jones was '3/25/2012'")
+        end
+        within("#1") do
+          expect(page).to have_link("Schroeder-Jerde")
+          expect(page).to have_content("$33455.31")
+          expect(page).to have_content("Top selling date for Schroeder-Jerde was '3/25/2012'")
+        end
+        within("#3") do
+          expect(page).to have_link("Willms and Sons")
+          expect(page).to have_content("$18427.08")
+          expect(page).to have_content("Top selling date for Willms and Sons was '3/7/2012'")
+        end
+        within("#4") do
+          expect(page).to have_link("Cummings-Thiel")
+          expect(page).to have_content("$3185.18")
+          expect(page).to have_content("Top selling date for Cummings-Thiel was '3/12/2012'")
+        end
+        within("#6") do
+          expect(page).to have_link("Williamson Group")
+          expect(page).to have_content("$2532.18")
+          expect(page).to have_content("Top selling date for Williamson Group was '3/10/2012'")
+        end
+        expect(page).to_not have_link("Bernhard-Johns")
+        expect(page).to_not have_content("49896565")
+        expect(page).to have_content("Top selling date for Bosco, Howe and Davis was '3/9/2012'")
+
+        expect(page).to_not have_link("Pollich and Sons")
+        expect(page).to_not have_content("3974755")
+        expect(page).to have_content("Top selling date for Ullrich-Moen was '3/9/2012'")
+      end
+    end
   end
 end
