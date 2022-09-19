@@ -166,9 +166,10 @@ RSpec.describe "merchant dashboard" do
 
       it 'Next to each item name, I see the date that the invoice was created. I see the date formatted like "Monday, July 18, 2019"' do
         visit merchant_dashboards_path(45)
+        date = "Monday, September 19, 2022"
 
         within "#item_47" do
-          expect(page).to have_content("Little basket - Invoice #60 - Sunday, September 18, 2022")
+          expect(page).to have_content("Little basket - Invoice #60 - #{date}")
         end
       end
 

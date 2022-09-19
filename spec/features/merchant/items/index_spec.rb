@@ -61,7 +61,7 @@ RSpec.describe 'Merchant Items Index Page' do
           expect(page).to_not have_content("Item Qui Esse")
         end
       end
-      
+
       describe '5 most popular items' do
         before :each do
           @merchant1 = Merchant.create!(id: 45, name:"Bob's Baskets")
@@ -77,24 +77,24 @@ RSpec.describe 'Merchant Items Index Page' do
           @item2 = Item.create!(id: 46, name:"Medium basket", description:"Blue and medium", unit_price: 1399, merchant_id: @merchant1.id)
           @item3 = Item.create!(id: 47, name:"Little basket", description:"Yellow and small", unit_price: 1199, merchant_id: @merchant1.id)
 
-          @invoice1 = Invoice.create!(id: 45, customer_id: @customer1.id, status: 1)
-          @invoice2 = Invoice.create!(id: 46, customer_id: @customer2.id, status: 1)
-          @invoice3 = Invoice.create!(id: 47, customer_id: @customer2.id, status: 0)
-          @invoice4 = Invoice.create!(id: 48, customer_id: @customer2.id, status: 2)
-          @invoice5 = Invoice.create!(id: 49, customer_id: @customer3.id, status: 1)
-          @invoice6 = Invoice.create!(id: 50, customer_id: @customer3.id, status: 0)
-          @invoice7 = Invoice.create!(id: 51, customer_id: @customer3.id, status: 1)
-          @invoice8 = Invoice.create!(id: 52, customer_id: @customer3.id, status: 2)
-          @invoice9 = Invoice.create!(id: 53, customer_id: @customer3.id, status: 2)
-          @invoice10 = Invoice.create!(id: 54, customer_id: @customer4.id, status: 1)
-          @invoice11 = Invoice.create!(id: 55, customer_id: @customer4.id, status: 1)
-          @invoice12 = Invoice.create!(id: 56, customer_id: @customer4.id, status: 1)
-          @invoice13 = Invoice.create!(id: 57, customer_id: @customer4.id, status: 0)
-          @invoice14 = Invoice.create!(id: 58, customer_id: @customer5.id, status: 1)
-          @invoice15 = Invoice.create!(id: 59, customer_id: @customer5.id, status: 1)
-          @invoice16 = Invoice.create!(id: 60, customer_id: @customer5.id, status: 0)
-          @invoice17 = Invoice.create!(id: 61, customer_id: @customer5.id, status: 0)
-          @invoice18 = Invoice.create!(id: 62, customer_id: @customer5.id, status: 1)
+          @invoice1 = Invoice.create!(id: 45, customer_id: @customer1.id, status: 1, created_at: "2012-04-21 14:54:09 UTC,2012-03-27 14:54:09 UTC")
+          @invoice2 = Invoice.create!(id: 46, customer_id: @customer2.id, status: 1, created_at: "2012-04-22 14:54:09 UTC,2012-03-27 14:54:09 UTC")
+          @invoice3 = Invoice.create!(id: 47, customer_id: @customer2.id, status: 0, created_at: "2012-04-23 14:54:09 UTC,2012-03-27 14:54:09 UTC")
+          @invoice4 = Invoice.create!(id: 48, customer_id: @customer2.id, status: 2, created_at: "2012-04-24 14:54:09 UTC,2012-03-27 14:54:09 UTC")
+          @invoice5 = Invoice.create!(id: 49, customer_id: @customer3.id, status: 1, created_at: "2012-04-25 14:54:09 UTC,2012-03-27 14:54:09 UTC")
+          @invoice6 = Invoice.create!(id: 50, customer_id: @customer3.id, status: 0, created_at: "2012-04-26 14:54:09 UTC,2012-03-27 14:54:09 UTC")
+          @invoice7 = Invoice.create!(id: 51, customer_id: @customer3.id, status: 1, created_at: "2012-04-27 14:54:09 UTC,2012-03-27 14:54:09 UTC")
+          @invoice8 = Invoice.create!(id: 52, customer_id: @customer3.id, status: 2, created_at: "2012-04-28 14:54:09 UTC,2012-03-27 14:54:09 UTC")
+          @invoice9 = Invoice.create!(id: 53, customer_id: @customer3.id, status: 2, created_at: "2012-04-29 14:54:09 UTC,2012-03-27 14:54:09 UTC")
+          @invoice10 = Invoice.create!(id: 54, customer_id: @customer4.id, status: 1, created_at: "2012-04-21 14:54:09 UTC,2012-03-27 14:54:09 UTC")
+          @invoice11 = Invoice.create!(id: 55, customer_id: @customer4.id, status: 1, created_at: "2012-04-22 14:54:09 UTC,2012-03-27 14:54:09 UTC")
+          @invoice12 = Invoice.create!(id: 56, customer_id: @customer4.id, status: 1, created_at: "2012-04-23 14:54:09 UTC,2012-03-27 14:54:09 UTC")
+          @invoice13 = Invoice.create!(id: 57, customer_id: @customer4.id, status: 0, created_at: "2012-04-24 14:54:09 UTC,2012-03-27 14:54:09 UTC")
+          @invoice14 = Invoice.create!(id: 58, customer_id: @customer5.id, status: 1, created_at: "2012-04-25 14:54:09 UTC,2012-03-27 14:54:09 UTC")
+          @invoice15 = Invoice.create!(id: 59, customer_id: @customer5.id, status: 1, created_at: "2012-04-26 14:54:09 UTC,2012-03-27 14:54:09 UTC")
+          @invoice16 = Invoice.create!(id: 60, customer_id: @customer5.id, status: 0, created_at: "2012-04-27 14:54:09 UTC,2012-03-27 14:54:09 UTC")
+          @invoice17 = Invoice.create!(id: 61, customer_id: @customer5.id, status: 0, created_at: "2012-04-28 14:54:09 UTC,2012-03-27 14:54:09 UTC")
+          @invoice18 = Invoice.create!(id: 62, customer_id: @customer5.id, status: 1, created_at: "2012-04-29 14:54:09 UTC,2012-03-27 14:54:09 UTC")
 
           @invoice_item1 = InvoiceItem.create!(id: 45, item_id: @item1.id, invoice_id: @invoice1.id, quantity:1, unit_price:1499 , status: 0)
           @invoice_item2 = InvoiceItem.create!(id: 46, item_id: @item2.id, invoice_id: @invoice2.id, quantity:2 , unit_price:1399 , status: 1)
@@ -175,6 +175,42 @@ RSpec.describe 'Merchant Items Index Page' do
             expect(page).to have_content("Medium basket - $391.72 in sales")
             expect(page).to have_content("Little basket - $311.74 in sales")
             expect(page).to have_content("Big basket - $164.89 in sales")
+          end
+        end
+
+        it 'Next to each of the 5 most popular items I see the date with the most sales for each item' do
+          visit merchant_items_path(45)
+
+          within "#most_popular_items" do
+            within "#item_46" do
+              expect(page).to have_content("4/22/2012")
+            end
+
+            within "#item_47" do
+              expect(page).to have_content("4/25/2012")
+            end
+
+            within "#item_45" do
+              expect(page).to have_content("4/21/2012")
+            end
+          end
+        end
+
+        it 'I see a label "Top selling date for ___ was ___"' do
+          visit merchant_items_path(45)
+
+          within "#most_popular_items" do
+            within "#item_46" do
+              expect(page).to have_content("Top selling date for Medium basket was 4/22/2012")
+            end
+
+            within "#item_47" do
+              expect(page).to have_content("Top selling date for Little basket was 4/25/2012")
+            end
+
+            within "#item_45" do
+              expect(page).to have_content("Top selling date for Big basket was 4/21/2012")
+            end
           end
         end
       end

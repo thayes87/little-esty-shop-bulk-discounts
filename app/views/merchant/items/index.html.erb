@@ -24,10 +24,14 @@
   <h3>Top Items</h3>
     <ol>
       <% @top_items.each do |item| %>
-        <li id="item_<%= "#{item.id}" %>"> <%= link_to "#{item.name}", merchant_item_path(@merchant.id, item.id)%> - $<%= '%.2f'% ((item.item_revenue.to_f) / 100) %> in sales</li>
+        <li id="item_<%= "#{item.id}" %>"> <%= link_to "#{item.name}", merchant_item_path(@merchant.id, item.id)%> - $<%= '%.2f'% ((item.item_revenue.to_f) / 100) %> in sales
+          <div>Top selling date for <%= item.name %> was <%= item.best_day.strftime("%-m/%-d/%Y") %></div>
+        </li>
       <% end %>
     </ol>
 </div>
+
+
 
 <div id="New_Item">
 <%= link_to "Create Item", new_merchant_item_path(@merchant.id) %>

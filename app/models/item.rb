@@ -27,4 +27,15 @@ class Item < ApplicationRecord
     .order(item_revenue: :desc)
     .limit(5)
   end
+
+  def best_day
+    invoices
+    .select('invoices.*, count(invoices) as total_invoices')
+    .joins(:transactions)
+    .where('transactions.result = 0')
+    .group('invoices.id')
+    .order('total_invoices')
+    .last
+    .created_at
+  end
 end

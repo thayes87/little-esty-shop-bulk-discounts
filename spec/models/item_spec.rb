@@ -100,4 +100,10 @@ RSpec.describe Item, type: :model do
       end
     end
   end
+
+  describe 'instance methods' do
+    it 'can determine the date with the most sales of an item' do
+      expect(Item.first.best_day).to eq("Sun, 25 Mar 2012 09:54:09 UTC +00:00")
+    end
+  end
 end
