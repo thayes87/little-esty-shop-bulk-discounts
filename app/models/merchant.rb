@@ -22,4 +22,8 @@ class Merchant < ApplicationRecord
   def self.disabled_merchants
     all.where(status: "disabled")
   end
+
+  def top_five_by_revenue
+
+  end
 end

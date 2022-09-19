@@ -129,6 +129,7 @@ RSpec.describe 'As an admin,' do
         expect(page).to have_content("Williamson Group")
         expect(page).to_not have_content("Bosco, Howe and Davis")
         expect(page).to_not have_content("Ullrich-Moen")
+      end
     end
 
     it "I see that each merchant name links to the admin merchant show page for that merchant" do
