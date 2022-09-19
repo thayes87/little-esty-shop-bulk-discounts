@@ -16,6 +16,21 @@ RSpec.describe 'Merchant Invoices Show Page' do
           expect(page).to have_content("Invoice Customer Name: Joey Ondricka")
           expect(page).to_not have_content("Invoice ID: 5")
       end
+
+      it 'I see all of my items on the invoice including the name' do
+        @merchant = Merchant.first
+        invoice_1 = @merchant.invoices.first
+
+        visit merchant_invoice_path(@merchant, invoice_1)
+
+        expect(page).to have_content("Item Name: Item Qui Esse")
+        expect(page).to have_content("Item Quantity: 5")
+        expect(page).to have_content("Unit Price: $136.35")
+        expect(page).to have_content("Item: Status: packaged")
+
+        expect(page).to_not have_content("Item Name: Item Expedita Aliquam")
+        expect(page).to_not have_content("Item Name: Provident At")
+      end
     end
   end
 end
