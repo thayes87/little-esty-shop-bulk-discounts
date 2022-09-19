@@ -21,5 +21,5 @@ class Merchant < ApplicationRecord
 
   def self.disabled_merchants
     all.where(status: "disabled")
-  end
+  end 
 end
