@@ -7,8 +7,8 @@ RSpec.describe 'Merchant Invoices Index Page' do
         visit merchant_invoices_path(Merchant.first)
 
         within '#invoices' do
-          expect(page).to have_content("Invoice ID: 1")
-          expect(page).to have_content("Invoice ID: 5")
+          expect(page).to have_link("Invoice #1")
+          expect(page).to have_link("Invoice #5")
         end
       end
     end
