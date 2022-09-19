@@ -33,5 +33,19 @@ RSpec.describe Merchant, type: :model do
         expect(merchant.disabled_items.count).to eq(2)
       end
     end
+
+    describe "top_five_by_revenue" do
+      it "returns the top five merchants by revenue" do
+        klein = Merchant.find(2)
+        schroeder = Merchant.find(1)
+        willms = Merchant.find(3)
+        cummings = Merchant.find(4)
+        williamson = Merchant.find(6)
+
+        expected_arr = [klein, schroeder, willms, cummings, williamson]
+
+        expect(Merchant.top_five_by_revenue).to eq(expected_arr)
+      end
+    end
   end
 end
