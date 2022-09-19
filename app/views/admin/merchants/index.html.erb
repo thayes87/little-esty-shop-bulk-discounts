@@ -7,7 +7,13 @@
     <li><%= link_to "Invoices", admin_invoices_path %></li>
   </ul>
 </nav>
-
+<section id="top_five_merchants">
+  <ol>
+    <% @top_five_merchants.each do |merchant| %>
+      <li id="<%= merchant.id %>"><%= merchant.name %> - <%= merchant.revenue %></li>
+    <% end %>
+  </ol>
+</section>
 <section id="merchant_names">
   <div id="disabled_merchants">
     <h4> Disabled Merchants </h4>
