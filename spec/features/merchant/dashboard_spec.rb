@@ -30,7 +30,7 @@ RSpec.describe "merchant dashboard" do
     @invoice13 = Invoice.create!(id: 57, customer_id: @customer4.id, status: 0)
     @invoice14 = Invoice.create!(id: 58, customer_id: @customer5.id, status: 1)
     @invoice15 = Invoice.create!(id: 59, customer_id: @customer5.id, status: 1)
-    @invoice16 = Invoice.create!(id: 60, customer_id: @customer5.id, status: 0)
+    @invoice16 = Invoice.create!(id: 60, customer_id: @customer5.id, status: 0, created_at:"2022-09-19 09:54:09" )
     @invoice17 = Invoice.create!(id: 61, customer_id: @customer5.id, status: 0)
     @invoice18 = Invoice.create!(id: 62, customer_id: @customer5.id, status: 1)
 
@@ -166,10 +166,9 @@ RSpec.describe "merchant dashboard" do
 
       it 'Next to each item name, I see the date that the invoice was created. I see the date formatted like "Monday, July 18, 2019"' do
         visit merchant_dashboard_index_path(45)
-        date = "Monday, September 19, 2022"
 
         within "#item_47" do
-          expect(page).to have_content("Little basket - Invoice #60 - #{date}")
+          expect(page).to have_content("Little basket - Invoice #60 - Monday, September 19, 2022")
         end
       end
 
@@ -178,9 +177,9 @@ RSpec.describe "merchant dashboard" do
 
         item1 = "Medium basket"
         item2 = "Little basket"
-
+    
         within '#items_ready_to_ship' do
-          expect(item1).to appear_before(item2)
+          expect(item2).to appear_before(item1)
         end
       end
     end
