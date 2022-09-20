@@ -51,7 +51,7 @@ RSpec.describe 'Merchant Invoices Show Page' do
 
         within "div#1" do
           within "#status_#{invoice_1.invoice_items.first.id}" do
-            expect(page).to have_select('status'), selected: 'packaged', options: ['pending, packaged, shipped']
+            expect(page).to have_select('status'), 'packaged'
           end
         end
       end
@@ -66,8 +66,9 @@ RSpec.describe 'Merchant Invoices Show Page' do
 
           within "div#1" do
             within "#status_#{invoice_1.invoice_items.first.id}" do
-              select 'shipped', from: 'status'
-              expect(page).to have_select('status'), selected: 'shipped', options: ['pending, packaged, shipped']
+              select :shipped, from: 'status'
+
+              expect(page).to have_select('status'), 'shipped'
             end
           end
         end
@@ -96,7 +97,7 @@ RSpec.describe 'Merchant Invoices Show Page' do
 
             within "div#1" do
               within "#status_#{invoice_1.invoice_items.first.id}" do
-                select 'shipped', from: 'status'
+                select :shipped, from: 'status'
                 click_button 'Update Item Status'
                 expect(current_path).to eq(merchant_invoice_path(@merchant, invoice_1))
               end
@@ -112,9 +113,9 @@ RSpec.describe 'Merchant Invoices Show Page' do
 
             within "div#1" do
               within "#status_#{invoice_1.invoice_items.first.id}" do
-                select 'shipped', from: 'status'
+                select :shipped, from: 'status'
                 click_button 'Update Item Status'
-                expect(page).to have_select('status'), selected: 'shipped', options: ['pending, packaged, shipped']
+                expect(page).to have_select('status'), 'shipped'
               end
             end
           end
