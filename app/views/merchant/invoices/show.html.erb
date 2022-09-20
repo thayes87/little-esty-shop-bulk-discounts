@@ -4,3 +4,14 @@
 <p>Invoice Status: <%= @invoice.status %></p>
 <p>Invoice Date: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %></p>
 <p>Invoice Customer Name: <%= "#{@invoice.customer.first_name} #{@invoice.customer.last_name}" %></p>
+
+<% @invoice_items.each do |invoice_item| %>
+  <div id=<%= "#{invoice_item.item.id}" %>>
+    <p>Item Name: <%= invoice_item.item.name %>
+    <p>Item Quantity: <%= invoice_item.quantity %>
+    <p>Item Unit Price: $<%= '%.2f'% ((invoice_item.unit_price.to_f) / 100) %>
+    <p>Item Status: <%= invoice_item.status %>
+  </div>
+<% end %>
+
+<p>Total Revenue: $<%= '%.2f'% ((@invoice.total_revenue.to_f) / 100) %></p>
