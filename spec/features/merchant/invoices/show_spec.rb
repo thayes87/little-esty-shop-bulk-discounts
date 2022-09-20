@@ -7,7 +7,7 @@ RSpec.describe 'Merchant Invoices Show Page' do
         @merchant = Merchant.first
         invoice_1 = @merchant.invoices.first
         invoice_2 = @merchant.invoices.last
-        
+
         visit merchant_invoice_path(@merchant, invoice_1)
 
           expect(page).to have_content("Invoice ID: 1")
@@ -22,7 +22,7 @@ RSpec.describe 'Merchant Invoices Show Page' do
         invoice_1 = @merchant.invoices.first
 
         visit merchant_invoice_path(@merchant, invoice_1)
-        
+
         within "div#1" do
           expect(page).to have_content("Item Name: Item Qui Esse")
           expect(page).to have_content("Item Quantity: 5")
@@ -41,6 +41,78 @@ RSpec.describe 'Merchant Invoices Show Page' do
 
         visit merchant_invoice_path(@merchant, invoice_1)
           expect(page).to have_content("Total Revenue: $21067.77")
+      end
+
+      it 'I see that each invoice item status is a select field and I see that the invoice items current status is selected' do
+        @merchant = Merchant.first
+        invoice_1 = @merchant.invoices.first
+        invoice_2 = @merchant.invoices.last
+
+        visit merchant_invoice_path(@merchant, invoice_1)
+
+        #unsure of syntax
+        within '#status' do
+          expect(page).to have_field('invoice_status')
+          expect(page).to have_select('Status'), selected: 'Cancelled', options: ['In Progress, Completed, Cancelled']
+          expect(page).to have_selector('.invoice_status')
+        end
+      end
+
+      describe 'When I click this select field' do
+        it 'I can select a new status for the Item' do
+          @merchant = Merchant.first
+          invoice_1 = @merchant.invoices.first
+          invoice_2 = @merchant.invoices.last
+
+          visit merchant_invoice_path(@merchant, invoice_1)
+
+          within '#status' do
+            select 'In Progress', from: 'Status'
+            expect(page).to have_select('Status'), selected: 'In Progress', options: ['In Progress, Completed, Cancelled']
+          end
+        end
+
+        it 'next to the select field I see a button to "Update Item Status"' do
+          @merchant = Merchant.first
+          invoice_1 = @merchant.invoices.first
+          invoice_2 = @merchant.invoices.last
+
+          visit merchant_invoice_path(@merchant, invoice_1)
+
+          within '#status' do
+            expect(page).to have_button('Update Item Status')
+          end
+        end
+
+        describe 'When I click this button' do
+          it 'I am taken back to the merchant invoice show page' do
+            @merchant = Merchant.first
+            invoice_1 = @merchant.invoices.first
+            invoice_2 = @merchant.invoices.last
+
+            visit merchant_invoice_path(@merchant, invoice_1)
+
+            within '#status' do
+              select 'In Progress', from: 'Status'
+              click_button 'Update Item Status'
+              expect(current_path).to eq(merchant_invoice_path(@merchant, invoice_1))
+            end
+          end
+
+          it 'I see that my Items status has now been updated' do
+            @merchant = Merchant.first
+            invoice_1 = @merchant.invoices.first
+            invoice_2 = @merchant.invoices.last
+
+            visit merchant_invoice_path(@merchant, invoice_1)
+
+            within '#status' do
+              select 'In Progress', from: 'Status'
+              click_button 'Update Item Status'
+              expect(page).to have_select('Status'), selected: 'In Progress', options: ['In Progress, Completed, Cancelled']
+            end
+          end
+        end
       end
     end
   end
