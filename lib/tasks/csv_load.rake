@@ -65,7 +65,7 @@ namespace :csv_load do
 
       InvoiceItem.create!({id: row[:id], item_id: row[:item_id], invoice_id: row[:invoice_id], quantity: row[:quantity], unit_price: row[:unit_price], status: status[row[:status]], created_at: row[:created_at], updated_at: row[:updated_at]})
     end
-    ActiveRecord::Base.connection.reset_pk_sequence!('invoice_Items')
+    ActiveRecord::Base.connection.reset_pk_sequence!('invoice_items')
     puts "Seeded Invoice_Items Table"
     puts "==================================="
   end
