@@ -1,7 +1,7 @@
 class GitHub
-  attr_reader :title
+  attr_reader :name
 
   def initialize(data)
-    @title = data[:title]
+    @name = data[:name]
   end
 end
