@@ -75,20 +75,20 @@ RSpec.describe "merchant dashboard" do
 
   describe 'As a merchant, When I visit my merchant dashboard' do
     it 'I see the name of my merchant' do
-      visit merchant_dashboards_path(Merchant.first)
+      visit merchant_dashboard_index_path(Merchant.first)
 
       expect(page).to have_content(Merchant.first.name)
       expect(page).to_not have_content(Merchant.last.name)
     end
 
     it 'I see link to my merchant items index' do
-      visit merchant_dashboards_path(Merchant.first)
+      visit merchant_dashboard_index_path(Merchant.first)
 
       expect(page).to have_link("My Items")
     end
 
     it 'I see link to my merchant invoices index' do
-      visit merchant_dashboards_path(Merchant.first)
+      visit merchant_dashboard_index_path(Merchant.first)
 
       expect(page).to have_link("My Invoices")
     end
@@ -96,7 +96,7 @@ RSpec.describe "merchant dashboard" do
     describe 'Top 5 Customers' do
 
       it 'I see the names of the top 5 customers who have conducted the largest number of successful transactions with my merchant' do
-        visit merchant_dashboards_path(45)
+        visit merchant_dashboard_index_path(45)
 
         within ("#top_customers") do
           customer1 = "Porter Whitehall"
@@ -113,7 +113,7 @@ RSpec.describe "merchant dashboard" do
       end
 
       it 'Next to each customer name I see the number of successful transactions they have conducted with my merchant' do
-        visit merchant_dashboards_path(45)
+        visit merchant_dashboard_index_path(45)
 
         within "#customer_49" do
           expect(page).to have_content("Porter Whitehall - 5 purchases")
@@ -139,7 +139,7 @@ RSpec.describe "merchant dashboard" do
 
     describe 'Items Ready to Ship' do
       it 'In that section I see a list of the names of all of my items that have been ordered and have not yet been shipped' do
-        visit merchant_dashboards_path(45)
+        visit merchant_dashboard_index_path(45)
 
         within '#items_ready_to_ship' do
           expect(page).to have_content("Items Ready to Ship")
@@ -149,7 +149,7 @@ RSpec.describe "merchant dashboard" do
       end
 
       it 'Next to each item, I see the id of the invoice that ordered my item' do
-        visit merchant_dashboards_path(45)
+        visit merchant_dashboard_index_path(45)
 
         within "#item_47" do
           expect(page).to have_content("Invoice #60")
@@ -157,7 +157,7 @@ RSpec.describe "merchant dashboard" do
       end
 
       it 'Each invoice id is a link to my merchants invoice show page' do
-        visit merchant_dashboards_path(45)
+        visit merchant_dashboard_index_path(45)
 
         within "#item_47" do
           expect(page).to have_link("Invoice #60")
@@ -165,7 +165,7 @@ RSpec.describe "merchant dashboard" do
       end
 
       it 'Next to each item name, I see the date that the invoice was created. I see the date formatted like "Monday, July 18, 2019"' do
-        visit merchant_dashboards_path(45)
+        visit merchant_dashboard_index_path(45)
         date = "Monday, September 19, 2022"
 
         within "#item_47" do
@@ -174,7 +174,7 @@ RSpec.describe "merchant dashboard" do
       end
 
       it 'I see that the list is ordered from oldest to newest' do
-        visit merchant_dashboards_path(45)
+        visit merchant_dashboard_index_path(45)
 
         item1 = "Medium basket"
         item2 = "Little basket"

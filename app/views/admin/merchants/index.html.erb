@@ -10,7 +10,10 @@
 <section id="top_five_merchants">
   <ol>
     <% @top_five_merchants.each do |merchant| %>
-      <li id="<%= merchant.id %>"><%= link_to "#{merchant.name}", admin_merchant_path("#{merchant.id}")%> - Revenue: $<%= '%.2f'% ((merchant.revenue.to_f) / 100) %></li>
+      <li id="<%= merchant.id %>">
+        <%= link_to "#{merchant.name}", admin_merchant_path("#{merchant.id}")%> - Revenue: $<%= '%.2f'% ((merchant.revenue.to_f) / 100) %>
+        <p>Top selling date for <%= merchant.name %> was '<%= merchant.best_day.strftime("%-m/%-d/%-Y") %>'</p>
+      </li>
     <% end %>
   </ol>
 </section>

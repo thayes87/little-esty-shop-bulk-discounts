@@ -1,14 +1,10 @@
 Rails.application.routes.draw do
-  resources :merchants, module: :merchant do
-    resources :items
-    resources :invoices, only: [:index, :show]
+  resources :merchants, only: [:show] do
+    resources :dashboard, module: :merchant, only: [:index, :create]
+    resources :items, module: :merchant
+    resources :invoices, module: :merchant, only: [:index, :show]
   end
 
-  resources :merchants do
-    resources :dashboards, only: [:index, :create]
-  end
-
-  #get '/merchants/:id/items/:id', to: 'items#edit'
   resources :admin, only: [:index]
   namespace :admin do
     resources :invoices, except: [:new, :destroy]
