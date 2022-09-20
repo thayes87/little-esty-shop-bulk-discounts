@@ -13,3 +13,5 @@
     <p>Item Status: <%= invoice_item.status %>
   </div>
 <% end %>
+
+<p>Total Revenue: $<%= '%.2f'% ((@invoice.total_revenue.to_f) / 100) %></p>
