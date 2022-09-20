@@ -27,7 +27,6 @@ RSpec.describe 'Merchant Invoices Show Page' do
           expect(page).to have_content("Item Name: Item Qui Esse")
           expect(page).to have_content("Item Quantity: 5")
           expect(page).to have_content("Item Unit Price: $136.35")
-          expect(page).to have_content("Item Status: packaged")
 
           expect(page).to_not have_content("Item Name: Item Expedita Aliquam")
           expect(page).to_not have_content("Item Name: Provident At")
@@ -50,11 +49,10 @@ RSpec.describe 'Merchant Invoices Show Page' do
 
         visit merchant_invoice_path(@merchant, invoice_1)
 
-        #unsure of syntax
-        within '#status' do
-          expect(page).to have_field('invoice_status')
-          expect(page).to have_select('Status'), selected: 'Cancelled', options: ['In Progress, Completed, Cancelled']
-          expect(page).to have_selector('.invoice_status')
+        within "div#1" do
+          within "#status_#{invoice_1.invoice_items.first.id}" do
+            expect(page).to have_select('status'), selected: 'packaged', options: ['pending, packaged, shipped']
+          end
         end
       end
 
@@ -66,9 +64,11 @@ RSpec.describe 'Merchant Invoices Show Page' do
 
           visit merchant_invoice_path(@merchant, invoice_1)
 
-          within '#status' do
-            select 'In Progress', from: 'Status'
-            expect(page).to have_select('Status'), selected: 'In Progress', options: ['In Progress, Completed, Cancelled']
+          within "div#1" do
+            within "#status_#{invoice_1.invoice_items.first.id}" do
+              select 'shipped', from: 'status'
+              expect(page).to have_select('status'), selected: 'shipped', options: ['pending, packaged, shipped']
+            end
           end
         end
 
@@ -79,8 +79,10 @@ RSpec.describe 'Merchant Invoices Show Page' do
 
           visit merchant_invoice_path(@merchant, invoice_1)
 
-          within '#status' do
-            expect(page).to have_button('Update Item Status')
+          within "div#1" do
+            within "#status_#{invoice_1.invoice_items.first.id}" do
+              expect(page).to have_button('Update Item Status')
+            end
           end
         end
 
@@ -92,10 +94,12 @@ RSpec.describe 'Merchant Invoices Show Page' do
 
             visit merchant_invoice_path(@merchant, invoice_1)
 
-            within '#status' do
-              select 'In Progress', from: 'Status'
-              click_button 'Update Item Status'
-              expect(current_path).to eq(merchant_invoice_path(@merchant, invoice_1))
+            within "div#1" do
+              within "#status_#{invoice_1.invoice_items.first.id}" do
+                select 'shipped', from: 'status'
+                click_button 'Update Item Status'
+                expect(current_path).to eq(merchant_invoice_path(@merchant, invoice_1))
+              end
             end
           end
 
@@ -106,10 +110,12 @@ RSpec.describe 'Merchant Invoices Show Page' do
 
             visit merchant_invoice_path(@merchant, invoice_1)
 
-            within '#status' do
-              select 'In Progress', from: 'Status'
-              click_button 'Update Item Status'
-              expect(page).to have_select('Status'), selected: 'In Progress', options: ['In Progress, Completed, Cancelled']
+            within "div#1" do
+              within "#status_#{invoice_1.invoice_items.first.id}" do
+                select 'shipped', from: 'status'
+                click_button 'Update Item Status'
+                expect(page).to have_select('status'), selected: 'shipped', options: ['pending, packaged, shipped']
+              end
             end
           end
         end
