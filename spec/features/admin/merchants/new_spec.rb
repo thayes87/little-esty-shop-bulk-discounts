@@ -12,6 +12,21 @@ RSpec.describe 'As an admin,' do
       end
 
       expect(page.current_path).to eq admin_merchants_path
+      expect(page.current_path).not_to eq(new_admin_merchant_path)
+    end
+
+    it "When I click ‘Submit’ without filling the form, Then a flash message is displayed, requesting more information" do
+      visit new_admin_merchant_path
+
+      within("#new_merchant") do
+        expect(page).to have_field("merchant_name")
+
+        click_on "Create Merchant"
+
+        expect(current_path).to eq(new_admin_merchant_path)
+        expect(page).to have_content("Merchant not created: Missing required information")
+        expect(page.current_path).not_to eq admin_merchants_path
+      end
     end
 
     it "I see the merchant I just created displayed and I see my merchant was created with a default status of disabled." do
