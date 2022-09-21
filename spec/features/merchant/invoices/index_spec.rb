@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Merchant Invoices Index Page' do
+  # Method to test API
+  test_api_view
+
   before(:each) { mock_api_call }
 
   describe 'As a merchant' do

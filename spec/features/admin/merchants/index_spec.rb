@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe 'As an admin,' do
+  # Method to test API
+  test_api_view
+
   before(:each) { mock_api_call }
 
   describe 'When I visit the admin Merchants index ("/admin/merchants")' do
