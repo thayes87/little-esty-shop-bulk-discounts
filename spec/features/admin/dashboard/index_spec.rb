@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe "As an admin,", type: :feature do
+  # before(:each) do
+  #   stub_request(:get, "https://api.github.com/repos/Dominicod/little-esty-shop").to_return(status: 200, body: "", headers: {})
+  # end
   describe "when I visit the admin dashboard (/admin)" do
     it "I see a header indicating that I am on the admin dashboard" do
       visit admin_index_path
