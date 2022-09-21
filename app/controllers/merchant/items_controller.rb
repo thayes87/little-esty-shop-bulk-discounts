@@ -30,8 +30,8 @@ class Merchant::ItemsController < ApplicationController
       redirect_to merchant_item_path(@merchant, @item)
       flash[:notice] = "Item successfully updated."
     else
+      redirect_to edit_merchant_item_path(@merchant, @item)
       flash[:notice] = "Item not updated, additional information required."
-      render :show
     end
   end
 
