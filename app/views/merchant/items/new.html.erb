@@ -10,5 +10,6 @@
   <%= form.label :unit_price, "Unit Price" %>
   <%= form.text_field :unit_price %>
 <br>
+  <%= form.hidden_field :merchant_id, value: @merchant.id %>
   <%= form.submit %>
 <% end %>
