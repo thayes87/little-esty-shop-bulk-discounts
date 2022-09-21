@@ -9,22 +9,22 @@ class Customer < ApplicationRecord
   validates :last_name, presence: true
 
 
-  def self.top_five_customers(merchant_id)
-    select(:id, :first_name, :last_name, 'count(transactions.*) as number_transactions')
-    .joins(invoices: [:transactions, :items])
-    .where('transactions.result = 0')
-    .where('items.merchant_id = ?', merchant_id)
-    .group(:id)
-    .order('number_transactions desc')
-    .limit(5)
-  end
-
-  def self.top_five_customers_admin
-    joins(:transactions)
+  def self.top_five_customers(merchant_id = false)
+    if merchant_id
+      select(:id, :first_name, :last_name, 'count(transactions.*) as number_transactions')
+      .joins(invoices: [:transactions, :items])
       .where('transactions.result = 0')
-      .group(:last_name, :first_name)
-      .order(count: :desc)
+      .where('items.merchant_id = ?', merchant_id)
+      .group(:id)
+      .order('number_transactions desc')
       .limit(5)
-      .count
+    else
+      select(:id, :first_name, :last_name, 'count(transactions.*) as number_transactions')
+      .joins(:transactions)
+      .where('transactions.result = 0')
+      .group(:id)
+      .order('number_transactions desc')
+      .limit(5)
+    end
   end
 end
