@@ -6,17 +6,18 @@ class Merchant::InvoicesController < ApplicationController
   end
 
   def show
-    @merchant = Merchant.find(params[:merchant_id])
     @invoice = Invoice.find(params[:id])
-    @invoice_items = InvoiceItem.for_merchant(params[:merchant_id])
+    @merchant = Merchant.find(params[:merchant_id])
+    @invoice_items = @invoice.invoice_items
   end
 
   def update
     @merchant = Merchant.find(params[:merchant_id])
     @invoice = Invoice.find(params[:id])
-    @invoice_items = InvoiceItem.for_merchant(params[:merchant_id])
-    @invoice_item = InvoiceItem.update(invoice_item_params)
-    render :show
+    @invoice_items = @invoice.invoice_items
+    item = InvoiceItem.find_by(item_id: params[:item_id], invoice_id: params[:id])
+    item.update(invoice_item_params)
+    redirect_to merchant_invoice_path(@merchant, @invoice)
   end
 
   private

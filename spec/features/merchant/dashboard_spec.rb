@@ -162,7 +162,7 @@ RSpec.describe "merchant dashboard" do
         within "#item_47" do
           expect(page).to have_link("Invoice #60")
           click_link ("Invoice #60")
-          expect(current_path).to eq(merchant_invoice_path(@merchant, @item3))
+          expect(current_path).to eq(merchant_invoice_path(@merchant1, @invoice16))
         end
       end
 
