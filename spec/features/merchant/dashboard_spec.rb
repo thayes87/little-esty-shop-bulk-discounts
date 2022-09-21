@@ -161,6 +161,8 @@ RSpec.describe "merchant dashboard" do
 
         within "#item_47" do
           expect(page).to have_link("Invoice #60")
+          click_link ("Invoice #60")
+          expect(current_path).to eq(merchant_invoice_path(@merchant, @item3))
         end
       end
 
@@ -177,7 +179,7 @@ RSpec.describe "merchant dashboard" do
 
         item1 = "Medium basket"
         item2 = "Little basket"
-    
+
         within '#items_ready_to_ship' do
           expect(item2).to appear_before(item1)
         end
