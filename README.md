@@ -1,40 +1,68 @@
 # Little Esty Shop
 
-## Background and Description
+Practice designing a normalized database schema and defining model relationships as well as utilized advanced routing techniques including namespacing to organize and group like functionality together. Utilize advanced active record techniques to perform complex database queries and practice consuming an public API while utilizing POROs as a way to apply OOP principles to organize code.
 
-"Little Esty Shop" is a group project that requires students to build a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices.
+## Ruby/Rails version
 
-## Learning Goals
-- Practice designing a normalized database schema and defining model relationships
-- Utilize advanced routing techniques including namespacing to organize and group like functionality together.
-- Utilize advanced active record techniques to perform complex database queries
-- Practice consuming a public API while utilizing POROs as a way to apply OOP principles to organize code
+**ruby '2.7.4'**
+**rails '5.2.8'**
 
-## Requirements
-- must use Rails 5.2.x
-- must use PostgreSQL
-- all code must be tested via feature tests and model tests, respectively
-- must use GitHub branching, team code reviews via GitHub comments, and github projects to track progress on user stories
-- must include a thorough README to describe the project
-- must deploy completed code to Heroku
-- Continuous Integration / Continuous Deployment is not allowed
-- Any gems added to the project must be approved by an instructor
+## System dependecies
 
-## Setup
+**ruby '2.7.4'**
+**rails '5.2.8'**
 
-This project requires Ruby 2.7.4.
+#### Testing:
+* pry
+* rspec-rails
+* simplecov
+* capybara
+* launchy
+* shoulda-matchers
+* orderly
+* webmock
+* figaro
 
-* Fork this repository
-* Clone your fork
-* From the command line, install gems and set up your DB:
-    * `bundle`
-    * `rails db:create`
-* Run the test suite with `bundle exec rspec`.
-* Run your development server with `rails s` to see the app in action.
+#### Production:
+* HTTParty
 
-## Phases
+## Configuration
 
-1. [Database Setup](./doc/db_setup.md)
-1. [User Stories](./doc/user_stories.md)
-1. [Extensions](./doc/extensions.md)
-1. [Evaluation](./doc/evaluation.md)
+To setup the project you will first install the system dependecies by running;
+```
+bundle install
+```
+
+## Database creation and initialization
+
+To setup the database first run this command;
+```
+rails db:{drop,create,migrate}
+rails csv_load:all (If you want all data)
+rails csv_load_mock:all (if you want mock data)
+```
+
+## How to run test suite
+
+If you installed the testing dependecies you will be able to run;
+```
+rails test_db:setup
+bundle exec rspec -fd
+```
+
+This will run all of the tests located in the spec folder.
+
+## Project technology
+
+This project is running the following languages and tools:
+
+* Ruby
+* RSpec
+* Ruby on Rails
+* SimpleCov
+* Git-Hub API
+
+## Links
+
+- Project homepage: https://github.com/Dominicod/little-esty-shop
+- Repository: https://github.com/Dominicod/little-esty-shop
