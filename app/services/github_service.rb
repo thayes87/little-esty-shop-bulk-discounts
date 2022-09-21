@@ -1,7 +1,7 @@
 require 'httparty'
 require 'json'
 
-class GitHubService
+class GithubService
   def self.request(path, auth_required)
     if auth_required
       return [{login: 'Dominicod'}, {login: 'rebeckahendricks'}, {login: 'lcole37'}, {login: 'thayes87'}] if Rails.env == 'test'

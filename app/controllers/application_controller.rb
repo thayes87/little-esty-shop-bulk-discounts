@@ -1,7 +1,5 @@
-require_relative '../facades/github_facade'
-
 class ApplicationController < ActionController::Base
-  before_action :github
+  # before_action :github
 
   def github
     @github_name = GitHubFacade.github_info.name

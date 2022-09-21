@@ -1,4 +1,4 @@
-class GitHubName
+class GithubName
   attr_reader :name
 
   def initialize(data)
