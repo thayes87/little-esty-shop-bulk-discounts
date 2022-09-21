@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Merchant item create' do
+  before(:each) { mock_api_call }
+
   describe 'As a merchant' do
     describe 'When I visit my merchant items index page ("merchants/merchant_id/items")' do
       it 'I see a link to create a new item' do

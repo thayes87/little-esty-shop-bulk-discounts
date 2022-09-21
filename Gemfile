@@ -47,6 +47,7 @@ group :development, :test do
   gem 'orderly'
   gem 'simplecov'
   gem 'launchy'
+  gem  'webmock'
 end
 
 group :development do
