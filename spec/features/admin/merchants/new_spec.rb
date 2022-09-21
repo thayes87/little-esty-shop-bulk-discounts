@@ -24,9 +24,10 @@ RSpec.describe 'As an admin,' do
         click_on "Create Merchant"
 
         expect(current_path).to eq(new_admin_merchant_path)
-        expect(page).to have_content("Merchant not created: Missing required information")
         expect(page.current_path).not_to eq admin_merchants_path
       end
+
+      expect(page).to have_content("Merchant not created: Missing required information")
     end
 
     it "I see the merchant I just created displayed and I see my merchant was created with a default status of disabled." do
