@@ -1,7 +1,7 @@
 require 'httparty'
 require 'json'
 
-class GitHubService
+class GithubService
   def self.request(path, auth_required)
     if auth_required
       response = HTTParty.get("https://api.github.com/repos/Dominicod/little-esty-shop#{path}", headers: {authorization: "Bearer " + ENV['token']})

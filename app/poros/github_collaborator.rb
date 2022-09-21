@@ -1,4 +1,4 @@
-class GitHubCollaborator
+class GithubCollaborator
   attr_reader :login
 
   def initialize(data)
