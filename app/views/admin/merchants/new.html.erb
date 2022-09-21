@@ -1,11 +1,4 @@
-<nav>
-  <h1 id="admin_title">Admin Dashboard</h1>
-  <ul id="admin_links">
-    <li><%= link_to "Dashboard", admin_index_path %></li>
-    <li><%= link_to "Merchants", admin_merchants_path %></li>
-    <li><%= link_to "Invoices", admin_invoices_path %></li>
-  </ul>
-</nav>
+<%= render partial: 'nav_bar' %>
 
 <%= form_with model: [:admin, @merchant], local: true, id: "new_merchant" do |f| %>
   <%= f.label :name %>
