@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'As an admin,' do
+  before(:each) { mock_api_call }
+
   describe "When I visit a merchant's admin new page" do
     it "When I fill out the form I click ‘Submit’, Then I am taken back to the admin merchants index page" do
       visit new_admin_merchant_path

@@ -34,6 +34,29 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 RSpec.configure do |config|
+  def mock_api_call
+    payload_1 = {
+        "name": "little-esty-shop"
+      }
+
+    payload_2 = [
+        {
+          login: 'Dominicod'
+        },
+        {
+          login: 'rebeckahendricks'
+        },
+        {
+          login: 'lcole37'
+        },
+        {
+          login: 'thayes87'
+        }
+      ]
+
+    stub_request(:get, "https://api.github.com/repos/Dominicod/little-esty-shop").to_return(status: 200, body: payload_1.to_json)
+    stub_request(:get, "https://api.github.com/repos/Dominicod/little-esty-shop/collaborators").to_return(status: 200, body: payload_2.to_json)
+  end
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 

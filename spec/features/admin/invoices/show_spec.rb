@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'As an admin,' do
+  before(:each) { mock_api_call }
+
   describe "When I visit an admin invoice show page" do
     before :each do
       visit admin_invoice_path(Invoice.first)
