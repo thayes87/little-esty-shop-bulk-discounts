@@ -34,3 +34,6 @@ coverage
 
 # Dom's crap
 .idea
+
+# Ignore application configuration
+/config/application.yml

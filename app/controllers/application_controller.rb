@@ -4,8 +4,7 @@ class ApplicationController < ActionController::Base
   before_action :github
 
   def github
-    data = GitHubFacade.github_info
-    @github_name = data.name
+    @github_name = GitHubFacade.github_info.name
     @github_logins = GitHubFacade.github_info("/collaborators", true)
   end
 end
