@@ -3,4 +3,9 @@ class Merchant::BulkDiscountsController < ApplicationController
     @merchant = Merchant.find(params[:merchant_id])
     @merchant_discounts = @merchant.bulk_discounts
   end
+
+  def show
+    @merchant = Merchant.find(params[:merchant_id])
+    @merchant_discount = @merchant.bulk_discounts.find(params[:id])
+  end
 end
