@@ -109,6 +109,25 @@ RSpec.describe 'Merchant Bulk Discount Index Page' do
          expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant_2))
          expect(page).to have_content("Discount Not Created, Additional Information Required.")
       end
+
+      it 'when I successfully create a new bulk_discount, I see it listed on the bulk index page' do
+        @merchant_2 = Merchant.create!(name: "Em's Shoe Barn")
+        
+        visit new_merchant_bulk_discount_path(@merchant_2)
+
+        fill_in('Description', with: 'D')
+        fill_in('Quantity Break', with: '25')
+        fill_in('Discount', with: 25)
+        click_button('Save')
+
+        expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_2))
+        expect(page).to have_content("Discount Successfully Created!")
+        
+        within "div#bulk_discounts_D" do
+          expect(page).to have_link("Discount D")
+          expect(page).to_not have_link("Discount B")
+        end
+      end
     end
   end
 end
