@@ -5,7 +5,8 @@
     <p><%= link_to "Discount #{discount.description}", merchant_bulk_discount_path(@merchant, discount) %></p></p>
     <p>Discount: <%= discount.discount %>%</p>
     <p>Quantity Break: <%= discount.quantity_break %> items</p>
+    <p><%= link_to "Delete #{discount.description}", merchant_bulk_discount_path(@merchant, discount), method: :delete %></p>
   </div>
-  <% end %> 
+<% end %> 
 
 <p><%= link_to "Create Discount", new_merchant_bulk_discount_path(@merchant) %></p>
