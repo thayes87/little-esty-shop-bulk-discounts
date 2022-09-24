@@ -11,7 +11,7 @@ RSpec.describe 'Merchant Bulk Discount Show Page' do
         @discount_b = BulkDiscount.create!(description: "B", quantity_break: 10, discount: 15, merchant_id: @merchant_1.id)
         @discount_c = BulkDiscount.create!(description: "C", quantity_break: 5, discount: 10, merchant_id: @merchant_2.id)
         @discount_d = BulkDiscount.create!(description: "D", quantity_break: 10, discount: 15, merchant_id: @merchant_2.id)
-        
+
         visit merchant_bulk_discount_path(@merchant_1, @discount_a)
 
         expect(page).to have_content("Discount: 10%")

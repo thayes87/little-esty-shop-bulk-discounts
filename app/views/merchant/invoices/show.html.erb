@@ -16,6 +16,7 @@
           <%= form.select :status, ["pending", "packaged", "shipped"], selected: "#{invoice_item.status}" %>
           <%= form.hidden_field :item_id, value: invoice_item.item_id %>
           <%= form.submit "Update Item Status" %>
+          <%= form.hidden_field :invoice_item_id, value: invoice_item.id %>
         <% end %>
       </div>
   </div>
