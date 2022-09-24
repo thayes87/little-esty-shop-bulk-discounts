@@ -1,0 +1,15 @@
+<h1> Merchant New Bulk Discount Page </h1>
+
+<%= form_with url: merchant_bulk_discounts_path(@merchant), method: :post do |form| %>
+  <%= form.label :description, "Description" %>
+  <%= form.text_field :description %>
+<br>
+  <%= form.label :quantity_break, "Quantity Break" %>
+  <%= form.text_field :quantity_break%>
+<br>
+  <%= form.label :discount, "Discount" %>
+  <%= form.text_field :discount %>
+<br>
+  <%= form.hidden_field :merchant_id, value: @merchant.id %>
+  <%= form.submit %>
+<% end %>

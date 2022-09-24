@@ -68,5 +68,89 @@ RSpec.describe 'Merchant Bulk Discount Index Page' do
         end
       end
     end
+    describe 'merchant bulk discount create' do
+      it 'I see a link to create a new discount, When I click this link I am taken to a new page where I see a form to add a new bulk discount ' do 
+        @merchant_2 = Merchant.create!(name: "Em's Shoe Barn")
+        
+        visit merchant_bulk_discounts_path(@merchant_2)
+
+        expect(page).to have_link("Create Discount")
+
+        click_link("Create Discount")
+
+        expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant_2))
+      end
+
+      it 'When I fill in the form with valid data and hit sumbit, I am redirected back to the bulk discount index' do
+        #happy path
+        @merchant_2 = Merchant.create!(name: "Em's Shoe Barn")
+        
+        visit new_merchant_bulk_discount_path(@merchant_2)
+
+        fill_in('Description', with: 'D')
+        fill_in('Quantity Break', with: '25')
+        fill_in('Discount', with: 25)
+        click_button('Save')
+
+        expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_2))
+        expect(page).to have_content("Discount Successfully Created!")
+      end
+
+      it 'When I fill in the form with incomplete data and hit sumbit, I am redirected back to the new discount page' do
+        #sad path
+        @merchant_2 = Merchant.create!(name: "Em's Shoe Barn")
+      
+        visit new_merchant_bulk_discount_path(@merchant_2)
+
+        fill_in('Description', with: 'D')
+        fill_in('Quantity Break', with: '')
+        fill_in('Discount', with: 25)
+        click_button('Save')
+
+        expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant_2))
+        expect(page).to have_content("Discount Not Created, Additional Information Required.")
+      end
+
+      it 'when I successfully create a new bulk_discount, I see it listed on the bulk index page' do
+        @merchant_2 = Merchant.create!(name: "Em's Shoe Barn")
+        
+        visit new_merchant_bulk_discount_path(@merchant_2)
+
+        fill_in('Description', with: 'D')
+        fill_in('Quantity Break', with: '25')
+        fill_in('Discount', with: 25)
+        click_button('Save')
+
+        expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_2))
+        expect(page).to have_content("Discount Successfully Created!")
+        
+        within "div#bulk_discounts_D" do
+          expect(page).to have_link("Discount D")
+          expect(page).to_not have_link("Discount B")
+        end
+      end
+    end
+    describe 'merchant bulk discount delete' do
+      it 'Then next to each bulk discount I see a link to delete it' do 
+        @merchant_1 = Merchant.create!(name: "Tom's Hat Shop")
+
+        @discount_a = BulkDiscount.create!(description: "A", quantity_break: 5, discount: 10, merchant_id: @merchant_1.id)
+        @discount_b = BulkDiscount.create!(description: "B", quantity_break: 10, discount: 15, merchant_id: @merchant_1.id)
+        @discount_c = BulkDiscount.create!(description: "C", quantity_break: 5, discount: 10, merchant_id: @merchant_1.id)
+        
+        visit merchant_bulk_discounts_path(@merchant_1)
+
+        within "div#bulk_discounts_A" do
+          expect(page).to have_link("Delete A")
+          click_link("Delete")
+        end
+
+        expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_1))
+
+        expect(page).to_not have_content("Discount A")
+        expect(page).to have_content("Discount B")
+        expect(page).to have_content("Discount C")
+      end
+    end
   end
 end

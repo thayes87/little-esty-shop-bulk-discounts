@@ -1,11 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'As an admin,' do
-  # Method to test API
-  test_api_view
-
-  before(:each) { mock_api_call }
-
   describe 'When I visit the admin Invoices index ("/admin/invoices")' do
     describe "navbar" do
       it "I see a header indicating that I am on the admin dashboard" do
