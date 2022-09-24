@@ -79,6 +79,19 @@ RSpec.describe 'Merchant Bulk Discount Index Page' do
 
         expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant_2))
       end
+
+      it 'When I fill in the form with valid data and hit sumbit, I am redirected back to the bulk discount index' do
+        @merchant_2 = Merchant.create!(name: "Em's Shoe Barn")
+        
+        visit new_merchant_bulk_discount_path(@merchant_2)
+
+        fill_in('Description', with: 'D')
+        fill_in('Quantity Break', with: '25')
+        fill_in('Discount', with: 25)
+        click_button('Submit')
+
+        expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_2))
+      end
     end
   end
 end
