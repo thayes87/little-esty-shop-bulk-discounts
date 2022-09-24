@@ -2,3 +2,4 @@
 
 <p>Discount: <%= @merchant_discount.discount %>%</p>
 <p>Quantity Break: <%= @merchant_discount.quantity_break %> items</p>
+<p><%= link_to "Edit", edit_merchant_bulk_discount_path(@merchant, @merchant_discount) %></p>
