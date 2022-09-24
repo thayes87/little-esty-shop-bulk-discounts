@@ -81,6 +81,7 @@ RSpec.describe 'Merchant Bulk Discount Index Page' do
       end
 
       it 'When I fill in the form with valid data and hit sumbit, I am redirected back to the bulk discount index' do
+        #happy path
         @merchant_2 = Merchant.create!(name: "Em's Shoe Barn")
         
         visit new_merchant_bulk_discount_path(@merchant_2)
@@ -88,9 +89,25 @@ RSpec.describe 'Merchant Bulk Discount Index Page' do
         fill_in('Description', with: 'D')
         fill_in('Quantity Break', with: '25')
         fill_in('Discount', with: 25)
-        click_button('Submit')
+        click_button('Save')
 
         expect(current_path).to eq(merchant_bulk_discounts_path(@merchant_2))
+        expect(page).to have_content("Discount Successfully Created!")
+      end
+
+      it 'When I fill in the form with incomplete data and hit sumbit, I am redirected back to the new discount page' do
+         #sad path
+         @merchant_2 = Merchant.create!(name: "Em's Shoe Barn")
+        
+         visit new_merchant_bulk_discount_path(@merchant_2)
+ 
+         fill_in('Description', with: 'D')
+         fill_in('Quantity Break', with: '')
+         fill_in('Discount', with: 25)
+         click_button('Save')
+ 
+         expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant_2))
+         expect(page).to have_content("Discount Not Created, Additional Information Required.")
       end
     end
   end
