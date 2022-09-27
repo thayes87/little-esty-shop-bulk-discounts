@@ -64,5 +64,22 @@ RSpec.describe Merchant, type: :model do
         expect(williamson.best_day).to eq "2012-03-10 00:54:09"
       end
     end
+
+    describe ".single_discount?" do
+      it "returns true if a merchant has ONLY one bulk_discount" do
+        @merchant1 = Merchant.create!(id: 45, name:"Bob's Baskets")
+        @discount_a = BulkDiscount.create!(description: "A", quantity_break: 10, discount: 25, merchant_id: @merchant1.id)
+
+        expect(@merchant1.single_discount?).to eq(true)
+      end
+
+      it 'returns false if a merchant has MORE than one bulk_discount' do
+        @merchant1 = Merchant.create!(id: 45, name:"Bob's Baskets")
+        @discount_a = BulkDiscount.create!(description: "A", quantity_break: 10, discount: 25, merchant_id: @merchant1.id)
+        @discount_b = BulkDiscount.create!(description: "B", quantity_break: 15, discount: 35, merchant_id: @merchant1.id)
+
+        expect(@merchant1.single_discount?).to eq(false)
+      end
+    end
   end
 end
