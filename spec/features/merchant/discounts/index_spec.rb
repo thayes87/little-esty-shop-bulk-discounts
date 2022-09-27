@@ -162,9 +162,12 @@ RSpec.describe 'Merchant Bulk Discount Index Page' do
           expect(page).to have_content("Upcoming Holidays")
 
           within "div#upcoming_holidays" do
-            expect(page).to have_content("")
-            expect(page).to have_content("")
-            expect(page).to have_content("")
+            expect(page).to have_content("Columbus Day")
+            expect(page).to have_content("2022-10-10")
+            expect(page).to have_content("Veterans Day")
+            expect(page).to have_content("2022-11-11")
+            expect(page).to have_content("Thanksgiving Day")
+            expect(page).to have_content("2022-11-24")
           end
         end
       end
