@@ -17,13 +17,19 @@ class Invoice < ApplicationRecord
     invoice_items.sum('invoice_items.quantity * invoice_items.unit_price')
   end
 
+  def merchant_single_discountable_items(merchant) 
+    invoice_items.where("quantity >= ?", merchant.bulk_discounts.first.quantity_break)
+  end
+
+  def merchant_single_non_discountable_items(merchant)
+    invoice_items.where("quantity < ?", merchant.bulk_discounts.first.quantity_break)
+  end
+  
   def collect_item_information(merchant)
-    if merchant.bulk_discounts.count == 1 && invoice_items.where("quantity >= ?", merchant.bulk_discounts.first.quantity_break).present?
-      discounted_items = invoice_items.where("quantity >= ?", merchant.bulk_discounts.first.quantity_break)
-      non_discounted_items = invoice_items.where("quantity < ?", merchant.bulk_discounts.max.quantity_break)
-      discount_revenue = discounted_items.sum('quantity * unit_price') * (1 - (merchant.bulk_discounts.max.discount.to_f / 100))
-      non_discounted_revenue = non_discounted_items.sum('quantity * unit_price').to_f
-      discounted_items.update(bulk_discounts_id: merchant.bulk_discounts.first.id)
+    if merchant.single_discount? && merchant_single_discountable_items(merchant).present?
+      discount_revenue = merchant_single_discountable_items(merchant).sum('quantity * unit_price') * (1 - (merchant.bulk_discounts.first.discount.to_f / 100))
+      non_discounted_revenue = merchant_single_non_discountable_items(merchant).sum('quantity * unit_price').to_f
+      merchant_single_discountable_items(merchant).update(bulk_discounts_id: merchant.bulk_discounts.first.id)
       bulk_discount_revenue = discount_revenue + non_discounted_revenue
     elsif merchant.bulk_discounts.count > 1 && merchant.bulk_discounts.pluck(:quantity_break).any? { |qty_break| qty_break >= invoice_items.pluck(:quantity).min }
       discounted_revenue_by_item = {}

@@ -40,4 +40,8 @@ class Merchant < ApplicationRecord
       .order(revenue: :desc)
       .limit(1)[0].created_at
   end
+
+  def single_discount?
+    bulk_discounts.count == 1
+  end
 end
