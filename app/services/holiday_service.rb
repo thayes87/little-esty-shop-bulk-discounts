@@ -4,11 +4,11 @@ require 'pry'
 
 class HolidayService
   def self.get_holidays
-    get_uri('https://date.nager.at/api/v3/NextPublicHolidays/%22us%22')
+    get_uri('https://date.nager.at/api/v3/NextPublicHolidays/US')
   end
 
   def self.get_uri(uri)
-    resonse = HTTParty.get(uri)
-    JSON.parse(response.body, symbolize_names: true)
+    response = HTTParty.get(uri)
+    json_response = JSON.parse(response.body, symbolize_names: true)
   end
 end

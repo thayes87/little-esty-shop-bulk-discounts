@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Merchant Bulk Discount Index Page' do
+  before do
+    allow(HolidayService).to receive(:get_holidays).and_return([{date: "2022-10-10", name: "Columbus Day"}, {date: "2022-11-11", name: "Veterans Day"}, {date: "2022-11-24", name: "Thanksgiving Day"}])
+  end
   describe 'As a merchant' do
     describe 'When I visit my merchant items index page' do
       it 'I see a link to view all my discounts, When I click this link, Then I am taken to my bulk discounts index page' do
@@ -162,9 +165,12 @@ RSpec.describe 'Merchant Bulk Discount Index Page' do
           expect(page).to have_content("Upcoming Holidays")
 
           within "div#upcoming_holidays" do
-            expect(page).to have_content("")
-            expect(page).to have_content("")
-            expect(page).to have_content("")
+            expect(page).to have_content("Columbus Day")
+            expect(page).to have_content("2022-10-10")
+            expect(page).to have_content("Veterans Day")
+            expect(page).to have_content("2022-11-11")
+            expect(page).to have_content("Thanksgiving Day")
+            expect(page).to have_content("2022-11-24")
           end
         end
       end

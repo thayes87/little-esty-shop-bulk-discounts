@@ -3,6 +3,7 @@ class Holiday
               :date
 
   def initialize(holiday_data)
-    require 'pry'; binding.pry
+    @name = holiday_data[:name]
+    @date = holiday_data[:date]
   end
 end
