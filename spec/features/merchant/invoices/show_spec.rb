@@ -207,6 +207,41 @@ RSpec.describe 'Merchant Invoices Show Page' do
 
           expect(page).to have_content("Total Discounted Revenue: $284.77")
         end
+
+        it 'I see a link to the show page for the bulk discount that was applied to each item' do
+          @merchant1 = Merchant.create!(id: 45, name:"Bob's Baskets")
+          
+          @discount_a = BulkDiscount.create!(description: "A", quantity_break: 10, discount: 25, merchant_id: @merchant1.id)
+          @discount_b = BulkDiscount.create!(description: "B", quantity_break: 15, discount: 30, merchant_id: @merchant1.id)
+
+          @customer1 = Customer.create!(id: 45, first_name:"John", last_name:"Doe")
+
+          @item1 = Item.create!(id: 45, name:"Big basket", description:"Green and big", unit_price: 1499, merchant_id: @merchant1.id)
+          @item2 = Item.create!(id: 46, name:"Medium basket", description:"Blue and medium", unit_price: 1399, merchant_id: @merchant1.id)
+          @item3 = Item.create!(id: 47, name:"Mini basket", description:"pink and small", unit_price: 999, merchant_id: @merchant1.id)
+
+          @invoice1 = Invoice.create!(id: 45, customer_id: @customer1.id, status: 1)
+
+          @invoice_item1 = InvoiceItem.create!(id: 45, item_id: @item1.id, invoice_id: @invoice1.id, quantity:5, unit_price:1499 , status: 0)
+          @invoice_item2 = InvoiceItem.create!(id: 46, item_id: @item2.id, invoice_id: @invoice1.id, quantity:10 , unit_price:1399 , status: 1)
+          @invoice_item3 = InvoiceItem.create!(id: 47, item_id: @item3.id, invoice_id: @invoice1.id, quantity:15 , unit_price:999 , status: 1)
+
+          visit merchant_invoice_path(@merchant1, @invoice1)
+          
+          within "div##{@item1.id}" do
+            expect(page).to_not have_link("Bulk Discount Applied")
+          end
+          
+          within "div##{@item2.id}" do
+            expect(page).to have_link("Bulk Discount Applied")
+          end
+
+          within "div##{@item3.id}" do
+            expect(page).to have_link("Bulk Discount Applied")
+            click_link("Bulk Discount Applied")
+            expect(current_path).to eq(merchant_bulk_discount_path(@merchant1, @discount_b))
+          end
+        end
       end
     end
   end

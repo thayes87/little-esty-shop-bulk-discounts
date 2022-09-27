@@ -9,27 +9,7 @@ class Merchant::InvoicesController < ApplicationController
     @invoice = Invoice.find(params[:id])
     @merchant = Merchant.find(params[:merchant_id])
     @invoice_items = @invoice.invoice_items
-    
-    if @merchant.bulk_discounts.count == 1 && @invoice_items.where("quantity >= ?", @merchant.bulk_discounts.first.quantity_break).present?
-      discounted_items = @invoice_items.where("quantity >= ?", @merchant.bulk_discounts.first.quantity_break)
-      non_discounted_items = @invoice_items.where("quantity < ?", @merchant.bulk_discounts.max.quantity_break)
-      discount_revenue = discounted_items.sum('quantity * unit_price') * (1 - (@merchant.bulk_discounts.max.discount.to_f / 100))
-      non_discounted_revenue = non_discounted_items.sum('quantity * unit_price').to_f
-
-      @bulk_discount_revenue = discount_revenue + non_discounted_revenue
-    elsif @merchant.bulk_discounts.count > 1 && @merchant.bulk_discounts.pluck(:quantity_break).any? { |qty_break| qty_break >= @invoice_items.pluck(:quantity).min }
-      discounted_revenue_by_item = {}
-      @invoice_items.each do |invoice_item|
-        @merchant.bulk_discounts.order(quantity_break: :asc).each do |bulk_discount|
-          next unless invoice_item.quantity >= bulk_discount.quantity_break
-          discount_price = (bulk_discount.discount.to_f / 100) * (invoice_item.quantity * invoice_item.unit_price)
-          discounted_revenue_by_item[invoice_item.id] = discount_price
-        end
-      end
-      @bulk_discount_revenue = @invoice.total_revenue - discounted_revenue_by_item.values.sum
-    else
-      @bulk_discount_revenue = @invoice.total_revenue
-    end
+    @bulk_discount_revenue = @invoice.collect_item_information(@merchant)
   end
   
 
