@@ -11,14 +11,19 @@
     <p>Item Quantity: <%= invoice_item.quantity %>
     <p>Item Unit Price: $<%= '%.2f'% ((invoice_item.unit_price.to_f) / 100) %>
     <h4>Item Status: <%= invoice_item.status %> </h4>
+    <% if invoice_item.bulk_discounts_id.present? %>
+      <p><%= link_to "Bulk Discount Applied", merchant_bulk_discount_path(@merchant.id, invoice_item.bulk_discounts_id) %></p>
+    <% end %>
       <div id="status_<%= "#{invoice_item.item.id}" %>">
         <%= form_with url: merchant_invoice_path(@merchant, @invoice), method: :patch do |form| %>
           <%= form.select :status, ["pending", "packaged", "shipped"], selected: "#{invoice_item.status}" %>
           <%= form.hidden_field :item_id, value: invoice_item.item_id %>
           <%= form.submit "Update Item Status" %>
+          <%= form.hidden_field :invoice_item_id, value: invoice_item.id %>
         <% end %>
       </div>
   </div>
 <% end %>
 
 <p>Total Revenue: $<%= '%.2f'% ((@invoice.total_revenue.to_f) / 100) %></p>
+<p>Total Discounted Revenue: $<%= '%.2f'% ((@bulk_discount_revenue.to_f) / 100) %></p>

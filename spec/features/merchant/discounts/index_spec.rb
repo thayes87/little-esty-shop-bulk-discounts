@@ -152,5 +152,22 @@ RSpec.describe 'Merchant Bulk Discount Index Page' do
         expect(page).to have_content("Discount C")
       end
     end
+    describe 'Merchants index page, Upcoming Holidays' do
+      describe 'When I visit the discounts index page and I see a section with a header of "Upcoming Holidays' do 
+        it 'has the name and date of the next 3 upcoming US holidays' do
+          @merchant_1 = Merchant.create!(name: "Tom's Hat Shop")
+
+          visit merchant_bulk_discounts_path(@merchant_1)
+
+          expect(page).to have_content("Upcoming Holidays")
+
+          within "div#upcoming_holidays" do
+            expect(page).to have_content("")
+            expect(page).to have_content("")
+            expect(page).to have_content("")
+          end
+        end
+      end
+    end
   end
 end
