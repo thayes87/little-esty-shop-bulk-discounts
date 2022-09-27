@@ -9,7 +9,7 @@ class Merchant::InvoicesController < ApplicationController
     @invoice = Invoice.find(params[:id])
     @merchant = Merchant.find(params[:merchant_id])
     @invoice_items = @invoice.invoice_items
-    @bulk_discount_revenue = @invoice.collect_item_information(@merchant)
+    @bulk_discount_revenue = @invoice.bulk_discount_revenue(@merchant)
   end
   
   def update

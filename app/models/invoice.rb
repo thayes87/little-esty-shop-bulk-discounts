@@ -37,23 +37,28 @@ class Invoice < ApplicationRecord
     merchant_single_discountable_items(merchant).update(bulk_discounts_id: merchant.bulk_discounts.first.id)
   end
   
-  def collect_item_information(merchant)
+  def bulk_discount_revenue(merchant)
     if merchant.single_discount? && merchant_single_discountable_items(merchant).present?
       track_discount_applied(merchant)
       calculate_discounted_revenue(merchant) + calculate_non_discounted_revenue(merchant)
-    elsif merchant.bulk_discounts.count > 1 && merchant.bulk_discounts.pluck(:quantity_break).any? { |qty_break| qty_break >= invoice_items.pluck(:quantity).min }
-      discounted_revenue_by_item = {}
-      invoice_items.each do |invoice_item|
-        merchant.bulk_discounts.order(quantity_break: :asc).each do |bulk_discount|
-          next unless invoice_item.quantity >= bulk_discount.quantity_break
-          discount_price = (bulk_discount.discount.to_f / 100) * (invoice_item.quantity * invoice_item.unit_price)
-          discounted_revenue_by_item[invoice_item.id] = discount_price
-          invoice_item.update(bulk_discounts_id: bulk_discount.id)
-        end
-      end
-      bulk_discount_revenue = total_revenue - discounted_revenue_by_item.values.sum
+    elsif merchant.multiple_discounts? && merchant.bulk_discounts.pluck(:quantity_break).any? { |qty_break| qty_break <= invoice_items.pluck(:quantity).max }
+      discounted_revenue_by_item = track_multiple_discounts_applied(merchant)
+      total_revenue - discounted_revenue_by_item.values.sum
     else
-      bulk_discount_revenue = total_revenue
+      total_revenue
     end
+  end
+
+  def track_multiple_discounts_applied(merchant)
+    discounted_revenue_by_item = {}
+    invoice_items.each do |invoice_item|
+      merchant.sorted_bulk_discounts.each do |bulk_discount|
+        next unless invoice_item.quantity >= bulk_discount.quantity_break
+        discount_price = (bulk_discount.discount.to_f / 100) * (invoice_item.quantity * invoice_item.unit_price)
+        discounted_revenue_by_item[invoice_item.id] = discount_price
+        invoice_item.update(bulk_discounts_id: bulk_discount.id)
+      end
+    end
+    discounted_revenue_by_item
   end
 end

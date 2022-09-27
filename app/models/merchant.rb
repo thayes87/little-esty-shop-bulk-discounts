@@ -44,4 +44,12 @@ class Merchant < ApplicationRecord
   def single_discount?
     bulk_discounts.count == 1
   end
+
+  def multiple_discounts?
+    bulk_discounts.count > 1
+  end
+
+  def sorted_bulk_discounts
+    bulk_discounts.order(quantity_break: :asc)
+  end
 end
