@@ -17,20 +17,20 @@ class Invoice < ApplicationRecord
     invoice_items.sum('invoice_items.quantity * invoice_items.unit_price')
   end
 
-  def merchant_single_discountable_items(merchant) 
-    invoice_items.where("quantity >= ?", merchant.bulk_discounts.first.quantity_break)
+  def merchant_single_discountable_items(merchant)
+    merchant.invoice_items.where("quantity >= ?", merchant.bulk_discounts.first.quantity_break)
   end
 
   def merchant_single_non_discountable_items(merchant)
-    invoice_items.where("quantity < ?", merchant.bulk_discounts.first.quantity_break)
+    merchant.invoice_items.where("quantity < ?", merchant.bulk_discounts.first.quantity_break)
   end
 
   def calculate_discounted_revenue(merchant)
-    merchant_single_discountable_items(merchant).sum('quantity * unit_price') * (1 - (merchant.bulk_discounts.first.discount.to_f / 100))
+    merchant_single_discountable_items(merchant).sum('invoice_items.quantity * invoice_items.unit_price') * (1 - (merchant.bulk_discounts.first.discount.to_f / 100))
   end
 
   def calculate_non_discounted_revenue(merchant)
-    merchant_single_non_discountable_items(merchant).sum('quantity * unit_price').to_f
+    merchant_single_non_discountable_items(merchant).sum('invoice_items.quantity * invoice_items.unit_price').to_f
   end
 
   def track_discount_applied(merchant)
@@ -41,7 +41,7 @@ class Invoice < ApplicationRecord
     if merchant.single_discount? && merchant_single_discountable_items(merchant).present?
       track_discount_applied(merchant)
       calculate_discounted_revenue(merchant) + calculate_non_discounted_revenue(merchant)
-    elsif merchant.multiple_discounts? && merchant.bulk_discounts.pluck(:quantity_break).any? { |qty_break| qty_break <= invoice_items.pluck(:quantity).max }
+    elsif merchant.multiple_discounts? && merchant.bulk_discounts.pluck(:quantity_break).any? { |qty_break| qty_break <= merchant.invoice_items.pluck(:quantity).max }
       discounted_revenue_by_item = track_multiple_discounts_applied(merchant)
       total_revenue - discounted_revenue_by_item.values.sum
     else
@@ -51,7 +51,7 @@ class Invoice < ApplicationRecord
 
   def track_multiple_discounts_applied(merchant)
     discounted_revenue_by_item = {}
-    invoice_items.each do |invoice_item|
+    merchant.invoice_items.each do |invoice_item|
       merchant.sorted_bulk_discounts.each do |bulk_discount|
         next unless invoice_item.quantity >= bulk_discount.quantity_break
         discount_price = (bulk_discount.discount.to_f / 100) * (invoice_item.quantity * invoice_item.unit_price)

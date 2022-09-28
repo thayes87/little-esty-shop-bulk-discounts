@@ -50,6 +50,6 @@ class Merchant < ApplicationRecord
   end
 
   def sorted_bulk_discounts
-    bulk_discounts.order(quantity_break: :asc)
+    bulk_discounts.order(discount: :asc)
   end
 end
