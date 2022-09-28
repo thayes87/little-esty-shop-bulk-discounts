@@ -9,18 +9,8 @@ class Merchant::InvoicesController < ApplicationController
     @invoice = Invoice.find(params[:id])
     @merchant = Merchant.find(params[:merchant_id])
     @invoice_items = @invoice.invoice_items
-    @bulk_discount_revenue = @invoice.collect_item_information(@merchant)
+    @bulk_discount_revenue = @invoice.bulk_discount_revenue(@merchant)
   end
-  
-
-  # def update
-  #   @merchant = Merchant.find(params[:merchant_id])
-  #   @invoice = Invoice.find(params[:id])
-  #   @invoice_items = @invoice.invoice_items
-  #   item = InvoiceItem.find_by(item_id: params[:item_id], invoice_id: params[:id])
-  #   item.update(invoice_item_params)
-  #   redirect_to merchant_invoice_path(@merchant, @invoice)
-  # end
   
   def update
     @merchant = Merchant.find(params[:merchant_id])
@@ -30,7 +20,7 @@ class Merchant::InvoicesController < ApplicationController
     redirect_to merchant_invoice_path(@merchant, @invoice)
   end
 
-  private
+private
   def invoice_item_params
     params.permit(:invoice_id, :item_id, :quantity, :unit_price, :status)
   end
