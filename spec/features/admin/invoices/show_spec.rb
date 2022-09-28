@@ -98,5 +98,10 @@ RSpec.describe 'As an admin,' do
       # expect(page).to_not have_content("in_progress") must be in within block
       expect(page).to_not have_content("Cecelia Osinski")
     end
+
+    it "I see the total discounted revenue from this invoice which includes bulk discounts in the calculation" do
+      expect(page).to have_content("Total Discounted")
+    end
+
   end
 end

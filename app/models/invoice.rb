@@ -16,7 +16,7 @@ class Invoice < ApplicationRecord
   def total_revenue
     invoice_items.sum('invoice_items.quantity * invoice_items.unit_price')
   end
-
+  
   def merchant_single_discountable_items(merchant)
     merchant.invoice_items.where("quantity >= ?", merchant.bulk_discounts.first.quantity_break)
   end
